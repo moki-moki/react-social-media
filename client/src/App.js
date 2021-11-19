@@ -18,6 +18,8 @@ import RegisterLayout from "./components/RegisterLayout";
 import HomepageLayout from "./components/HomepageLayout";
 import Navbar from "./components/Navbar";
 import About from "./components/About";
+import Footer from "./components/Footer";
+import CreatePost from "./components/CreatePost";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -38,10 +40,12 @@ function App() {
           <Route path="/register">
             {user ? <Redirect to="/" /> : <RegisterLayout />}
           </Route>
-          {/* <Route path="/about">
-            <About />
-          </Route> */}
+          <Route path="/about">{user ? <About /> : <RegisterLayout />}</Route>
+          <Route path="/createPost">
+            {user ? <CreatePost /> : <RegisterLayout />}
+          </Route>
         </Switch>
+        <Footer />
       </ThemeProvider>
     </Router>
   );

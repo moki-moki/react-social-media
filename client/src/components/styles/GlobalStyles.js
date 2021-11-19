@@ -11,7 +11,8 @@ const GlobalStyles = createGlobalStyle`
 
 body {
     background: ${({ theme }) => theme.colors.body};
-    font-family: ${({ theme }) => theme.fonts.defaultFont}
+    font-family: ${({ theme }) => theme.fonts.defaultFont};
+    line-height: 1.5;
 }
 
 h1, h2, h3, h4, h5 {
@@ -34,6 +35,19 @@ a {
 
 a:hover {
     color: ${({ theme }) => theme.colors.greenBtn};
+}
+
+input[type='file'] {
+display: none;
+}
+
+p1 {
+    color: ${({ theme }) => theme.colors.text}
+}
+
+b {
+    color: ${({ theme }) => theme.colors.heading};
+    font-weight: bold;
 }
 
 `;

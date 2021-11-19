@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import {
-  Logo,
   NavbarContainer,
   NavLeftSide,
   NavUserContainer,
@@ -11,11 +10,13 @@ const Navbar = ({ user }) => {
   return (
     <NavbarContainer>
       <NavLeftSide>
-        <h4>LOGO</h4>
-        <Link style={{ margin: "0 1em" }} to="/">
-          Home
+        <Link to="/">
+          <h4>LOGO</h4>
         </Link>
-        <Link to="/about">About</Link>
+        <Link style={{ margin: "0 1em" }} to="/about">
+          About
+        </Link>
+        <Link to="/createPost">Create a post</Link>
       </NavLeftSide>
       <NavUserContainer>
         <h3>{user.username}</h3>

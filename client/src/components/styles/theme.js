@@ -7,7 +7,7 @@ const theme = {
     greenBtn: "#09c372",
     redBtn: "#ff3860",
     orangeBtn: "#fa8142",
-    // editBtn: "#9166cc",
+    editBtn: "#9166cc",
   },
   fonts: {
     defaultFont: "Montserrat, sans-serif",

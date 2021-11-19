@@ -85,7 +85,7 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
               <p>
                 Posted At:{" "}
                 <span style={{ color: "#fff" }}>
-                  {moment(post.createdAt).format("DD MMM  LT")}
+                  {moment(post.createdAt).format("DD MMM  HH:mm")}
                 </span>{" "}
               </p>
             </div>
@@ -98,13 +98,13 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
               style={{ backgroundColor: isLiked ? "#09c372" : "transparent" }}
               onClick={likeHandle}
             >
-              &#128077; {like}
+              &#128077; {like > 0 ? like : null}
             </PostCardButtonsLike>
             <PostCardButtonsDislike
               style={{ backgroundColor: isDislike ? "#ff3860" : "transparent" }}
               onClick={dislikeHandle}
             >
-              &#128169;{dislike}
+              &#128169;{dislike > 0 ? dislike : null}
             </PostCardButtonsDislike>
           </PostCardBottomBar>
         </PostCardUserContainer>

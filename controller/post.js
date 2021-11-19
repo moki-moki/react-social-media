@@ -1,7 +1,8 @@
 const Post = require("../models/Post");
+const ErrorResponse = require("../utils/errorResponse");
 
 // CREATE POST
-exports.createPost = async (req, res) => {
+exports.createPost = async (req, res, next) => {
   const newPost = new Post(req.body);
 
   try {

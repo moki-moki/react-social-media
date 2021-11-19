@@ -6,19 +6,47 @@ const userRouter = require("./routes/user");
 const postRouter = require("./routes/post");
 const connectDB = require("./config/db");
 const errorHandler = require("./middleware/error");
+const multer = require("multer");
+const path = require("path");
+const helmet = require("helmet");
+const morgan = require("morgan");
 
 connectDB();
 
 const app = express();
 
+app.use("/images", express.static(path.join(__dirname, "public/images")));
+
 //middleware
 app.use(express.json()); //Allows us to get data from req.body
+app.use(helmet());
+app.use(morgan("common"));
+
+// For file uploading
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+app.post("/api/upload", upload.single("file"), (req, res) => {
+  try {
+    return res.status(200).json("File upload success");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// Routes
 app.use("/api/auth", authRouter);
 app.use("/api/private", privateRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/user", userRouter);
-// app.use(helmet());
-// app.use(morgan("common"));
 
 app.get("/", (req, res) => {
   res.send("Welcome to homepage");
