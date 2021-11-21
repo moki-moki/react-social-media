@@ -8,7 +8,6 @@ const HomepageLayout = () => {
       const req = await fetch("/posts/");
       const res = await req.json();
       setData(res);
-      console.log(res);
     };
     getData();
   }, []);

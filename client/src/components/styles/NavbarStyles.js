@@ -8,6 +8,7 @@ export const NavbarContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin-bottom: 1em;
 `;
 
 export const NavLeftSide = styled.div`

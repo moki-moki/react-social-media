@@ -36,7 +36,7 @@ const upload = multer({ storage: storage });
 
 app.post("/api/upload", upload.single("file"), (req, res) => {
   try {
-    return res.status(200).json("File upload success");
+    return res.status(200).json("File uploaded nice job!");
   } catch (error) {
     console.log(error);
   }
@@ -44,8 +44,8 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 
 // Routes
 app.use("/api/auth", authRouter);
-app.use("/api/private", privateRouter);
 app.use("/api/posts", postRouter);
+// app.use("/api/private", privateRouter);
 app.use("/api/user", userRouter);
 
 app.get("/", (req, res) => {

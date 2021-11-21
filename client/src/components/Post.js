@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./context/AuthContext";
 import {
   PostCardBottomBar,
+  PostCardBtnContainer,
+  PostCardButtonDelete,
   PostCardButtonsDislike,
   PostCardButtonsLike,
   PostCardContainer,
@@ -12,6 +14,7 @@ import {
   PostCardUserInfo,
   PostCardWrapper,
 } from "./styles/PostCardStyles";
+import { Link } from "react-router-dom";
 import moment from "moment";
 
 const Post = ({ post }) => {
@@ -23,7 +26,6 @@ const Post = ({ post }) => {
 
   const { user } = useContext(AuthContext);
 
-  // fetch config
   const myInit = {
     method: "PUT",
     headers: {
@@ -33,6 +35,7 @@ const Post = ({ post }) => {
       userId: user.user._id,
     }),
   };
+  console.log(post);
 
   useEffect(() => {
     setIsLiked(post.likes.includes(user.user._id));
@@ -68,6 +71,17 @@ const Post = ({ post }) => {
     setIsDislike(!isDislike);
   };
 
+  const deletePost = async (id) => {
+    try {
+      await fetch(`/posts/${id}`, {
+        method: "DELETE",
+      });
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <PostCardContainer>
       <PostCardContentContainer>
@@ -83,29 +97,41 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
             </PostCardUserInfo>
             <div>
               <p>
-                Posted At:{" "}
+                Posted At:
                 <span style={{ color: "#fff" }}>
                   {moment(post.createdAt).format("DD MMM  HH:mm")}
-                </span>{" "}
+                </span>
               </p>
             </div>
           </PostCardWrapper>
           <div style={{ width: "100%" }}>
-            <PostCardDesc>{post.desc}</PostCardDesc>
+            <PostCardDesc>
+              <Link to={`/posts/${post._id}`}>{post.desc}</Link>
+            </PostCardDesc>
           </div>
+          <img src={"http://localhost:5000/images/" + post.img} alt="" />
           <PostCardBottomBar>
-            <PostCardButtonsLike
-              style={{ backgroundColor: isLiked ? "#09c372" : "transparent" }}
-              onClick={likeHandle}
-            >
-              &#128077; {like > 0 ? like : null}
-            </PostCardButtonsLike>
-            <PostCardButtonsDislike
-              style={{ backgroundColor: isDislike ? "#ff3860" : "transparent" }}
-              onClick={dislikeHandle}
-            >
-              &#128169;{dislike > 0 ? dislike : null}
-            </PostCardButtonsDislike>
+            <PostCardBtnContainer>
+              <PostCardButtonsLike
+                style={{ backgroundColor: isLiked ? "#09c372" : "transparent" }}
+                onClick={likeHandle}
+              >
+                &#128077; {like > 0 ? like : null}
+              </PostCardButtonsLike>
+              <PostCardButtonsDislike
+                style={{
+                  backgroundColor: isDislike ? "#ff3860" : "transparent",
+                }}
+                onClick={dislikeHandle}
+              >
+                &#128169;{dislike > 0 ? dislike : null}
+              </PostCardButtonsDislike>
+            </PostCardBtnContainer>
+            {user.user._id === post.userId ? (
+              <PostCardButtonDelete onClick={() => deletePost(post._id)}>
+                &#10060;
+              </PostCardButtonDelete>
+            ) : null}
           </PostCardBottomBar>
         </PostCardUserContainer>
       </PostCardContentContainer>

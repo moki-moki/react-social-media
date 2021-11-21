@@ -56,12 +56,38 @@ export const PostCardBottomBar = styled.div`
   padding: 0.5em;
   width: 100%;
   border-top: 1px solid ${({ theme }) => theme.colors.heading};
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
 `;
 
-export const PostCardBtnContainer = styled.div``;
+export const PostCardBtnContainer = styled.div`
+  width: 100%;
+`;
+
+export const PostCardButtonDelete = styled.button`
+  background: none;
+  border: 1px solid ${({ theme }) => theme.colors.editBtn};
+  padding: 0.2em;
+  font-size: 1.5em;
+  transition: 0.2s ease all;
+  cursor: pointer;
+
+  &:hover {
+    border-radius: 10px;
+  }
+  &:active {
+    background: ${({ theme }) => theme.colors.editBtn};
+  }
+
+  &:focus {
+    background: ${({ theme }) => theme.colors.editBtn};
+  }
+`;
 
 export const PostCardButtonsDislike = styled.button`
   font-size: 1.5em;
+  cursor: pointer;
   padding: 0.2em;
   background: none;
   border: 1px solid ${({ theme }) => theme.colors.redBtn};
@@ -84,6 +110,7 @@ export const PostCardButtonsDislike = styled.button`
 
 export const PostCardButtonsLike = styled.button`
   font-size: 1.5em;
+  cursor: pointer;
   padding: 0.2em;
   background: none;
   border: 1px solid ${({ theme }) => theme.colors.greenBtn};

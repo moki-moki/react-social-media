@@ -10,6 +10,7 @@ exports.createPost = async (req, res, next) => {
     res.status(200).json(savedPost);
   } catch (error) {
     return next(new ErrorResponse("You can update only your post"), 500);
+    // res.status(500).json(error);
   }
 };
 
@@ -29,16 +30,12 @@ exports.updatePost = async (req, res) => {
 // DELTE POST
 exports.deletePost = async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id);
-    if (post.userId === req.body.userId) {
-      await post.deleteOne();
-      res.status(200).json("the post has been deleted");
-    } else {
-      res.status(403).json("you can delete only your post");
-      // return next(new ErrorResponse("You can delete only your post"), 403);
+    const post = await Post.findByIdAndDelete(req.params.id);
+    if (post) {
+      res.status(200).json({ msg: "deleted" });
     }
-  } catch (error) {
-    res.status(500).json(error);
+  } catch (err) {
+    return next(new ErrorResponse("You can update only your post"), 500);
   }
 };
 
@@ -78,6 +75,24 @@ exports.getPost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     res.status(200).json(post);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+exports.comment = async (req, res) => {
+  let comment = req.body.comment;
+  comment.postedBy = req.body.userId;
+  try {
+    let result = await Post.findByIdAndUpdate(
+      req.body.postId,
+      { $push: { comments: comment } },
+      { new: true }
+    )
+      .populate("comments.postedBy", "_id name")
+      .populate("postedBy", "_id name")
+      .exec();
+    res.json(result);
   } catch (error) {
     res.status(500).json(error);
   }

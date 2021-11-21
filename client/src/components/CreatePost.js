@@ -15,13 +15,17 @@ const CreatePost = () => {
   const desc = useRef();
   const { user } = useContext(AuthContext);
 
+  console.log(fileName);
+
+  const redirect = () => (window.location = "/");
+
   const submitHandler = async (e) => {
     e.preventDefault();
 
     const newPost = {
       userId: user.user._id,
       desc: desc.current.value,
-      img: "",
+      // img: "",
     };
 
     if (fileName) {
@@ -37,7 +41,9 @@ const CreatePost = () => {
         await fetch("/upload", {
           method: "POST",
           body: data,
-        }).then((res) => console.log(res.json()));
+        })
+          .then((res) => res.json())
+          .then((data) => console.log(data));
       } catch (error) {
         console.log(error);
       }
@@ -51,9 +57,12 @@ const CreatePost = () => {
         body: JSON.stringify({
           desc: newPost.desc,
           img: newPost.img,
-          userId: newPost.usedId,
+          userId: newPost.userId,
         }),
-      }).then((res) => console.log(res));
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+      redirect();
     } catch (error) {
       console.log(error);
     }
@@ -82,13 +91,11 @@ const CreatePost = () => {
           <FormInputUpload
             type="file"
             id="file"
-            onChange={fileSubmitHandler}
-            accept=".png, .jpeg, .jpg"
+            accept=".png,.jpeg,.jpg"
+            onChange={(e) => setFileName(e.target.files[0])}
           />
         </label>
-        <span style={{ marginBottom: "1em" }}>
-          {!fileName ? "No File Selected" : fileName}
-        </span>
+        {fileName && <img src={URL.createObjectURL(fileName)} alt="img" />}
         <FormBtnSubmit type="submit">Share</FormBtnSubmit>
       </ShareForm>
     </ShareContainer>

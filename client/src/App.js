@@ -20,6 +20,7 @@ import Navbar from "./components/Navbar";
 import About from "./components/About";
 import Footer from "./components/Footer";
 import CreatePost from "./components/CreatePost";
+import SinglePost from "./components/SinglePost";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -43,6 +44,9 @@ function App() {
           <Route path="/about">{user ? <About /> : <RegisterLayout />}</Route>
           <Route path="/createPost">
             {user ? <CreatePost /> : <RegisterLayout />}
+          </Route>
+          <Route path="/posts/:id">
+            {user ? <SinglePost /> : <RegisterLayout />}
           </Route>
         </Switch>
         <Footer />
