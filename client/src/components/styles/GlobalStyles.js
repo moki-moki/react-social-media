@@ -8,11 +8,13 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     background: ${({ theme }) => theme.colors.body};
     font-family: ${({ theme }) => theme.fonts.defaultFont};
     line-height: 1.5;
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 45px;
 }
 
 h1, h2, h3, h4, h5 {

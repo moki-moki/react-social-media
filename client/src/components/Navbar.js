@@ -18,12 +18,14 @@ const Navbar = ({ user }) => {
         </Link>
         <Link to="/createPost">Create a post</Link>
       </NavLeftSide>
-      <NavUserContainer>
-        <h3>{user.username}</h3>
-        <NavUserImg
-          src={`https://avatars.dicebear.com/api/identicon/${user.username}.svg`}
-        />
-      </NavUserContainer>
+      <Link to={`/profile/${user.username}`}>
+        <NavUserContainer>
+          <h3>{user.username}</h3>
+          <NavUserImg
+            src={`https://avatars.dicebear.com/api/identicon/${user.username}.svg`}
+          />
+        </NavUserContainer>
+      </Link>
     </NavbarContainer>
   );
 };

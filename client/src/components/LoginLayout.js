@@ -1,7 +1,8 @@
 import { useContext, useRef } from "react";
+import { Link } from "react-router-dom";
 import { loginCall } from "./auth/apiCalls";
 import { AuthContext } from "./context/AuthContext";
-import { FormButton, FormControl, Input } from "./styles/FormStyles";
+import { FormButton, FormControl, Input, SpanForm } from "./styles/FormStyles";
 
 const LoginLayout = () => {
   const password = useRef();
@@ -39,6 +40,9 @@ const LoginLayout = () => {
           ref={password}
         />
         <FormButton type="submit">LOGIN</FormButton>
+        <SpanForm>
+          Don't have an account? <Link to="/register">Register</Link>
+        </SpanForm>
       </FormControl>
     </div>
   );

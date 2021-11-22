@@ -88,11 +88,13 @@ const Post = ({ post }) => {
         <PostCardUserContainer>
           <PostCardWrapper>
             <PostCardUserInfo>
-              <PostCardUserImg
-                src={`
+              <Link to={`/profile/${userPost.username}`}>
+                <PostCardUserImg
+                  src={`
 https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
         `}
-              />
+                />
+              </Link>
               <p style={{ color: "#fff" }}>{userPost.username}</p>
             </PostCardUserInfo>
             <div>
@@ -106,10 +108,16 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
           </PostCardWrapper>
           <div style={{ width: "100%" }}>
             <PostCardDesc>
-              <Link to={`/posts/${post._id}`}>{post.desc}</Link>
+              <Link style={{ color: "#b2becd" }} to={`/posts/${post._id}`}>
+                {post.desc}
+              </Link>
             </PostCardDesc>
           </div>
-          <img src={"http://localhost:5000/images/" + post.img} alt="" />
+          <img
+            src={"http://localhost:5000/images/" + post.img}
+            style={{ width: "100%" }}
+            alt=""
+          />
           <PostCardBottomBar>
             <PostCardBtnContainer>
               <PostCardButtonsLike

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { Profiler, useContext, useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { AuthContext } from "./components/context/AuthContext";
 
@@ -21,6 +21,7 @@ import About from "./components/About";
 import Footer from "./components/Footer";
 import CreatePost from "./components/CreatePost";
 import SinglePost from "./components/SinglePost";
+import Profile from "./components/Profile";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -47,6 +48,9 @@ function App() {
           </Route>
           <Route path="/posts/:id">
             {user ? <SinglePost /> : <RegisterLayout />}
+          </Route>
+          <Route path="/profile/:username">
+            {user ? <Profile /> : <RegisterLayout />}
           </Route>
         </Switch>
         <Footer />

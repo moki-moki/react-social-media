@@ -1,4 +1,6 @@
 const Post = require("../models/Post");
+const User = require("../models/User");
+const auth = require("../middleware/auth");
 const ErrorResponse = require("../utils/errorResponse");
 
 // CREATE POST
@@ -9,8 +11,8 @@ exports.createPost = async (req, res, next) => {
     const savedPost = await newPost.save();
     res.status(200).json(savedPost);
   } catch (error) {
-    return next(new ErrorResponse("You can update only your post"), 500);
-    // res.status(500).json(error);
+    //return next(new ErrorResponse("You can update only your post"), 500);
+    //    res.status(500).json(error);
   }
 };
 
@@ -23,7 +25,8 @@ exports.updatePost = async (req, res) => {
       res.status(200).json("the post had been updated");
     }
   } catch (error) {
-    return next(new ErrorResponse("You can update only your post"), 403);
+    //    return next(new ErrorResponse("You can update only your post"), 403);
+    res.status(403).json(error);
   }
 };
 
@@ -34,8 +37,9 @@ exports.deletePost = async (req, res) => {
     if (post) {
       res.status(200).json({ msg: "deleted" });
     }
-  } catch (err) {
+  } catch (error) {
     return next(new ErrorResponse("You can update only your post"), 500);
+    res.status(500).json(error);
   }
 };
 
@@ -80,24 +84,6 @@ exports.getPost = async (req, res) => {
   }
 };
 
-exports.comment = async (req, res) => {
-  let comment = req.body.comment;
-  comment.postedBy = req.body.userId;
-  try {
-    let result = await Post.findByIdAndUpdate(
-      req.body.postId,
-      { $push: { comments: comment } },
-      { new: true }
-    )
-      .populate("comments.postedBy", "_id name")
-      .populate("postedBy", "_id name")
-      .exec();
-    res.json(result);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-};
-
 // GET ALL POSTS
 exports.getAllPosts = async (req, res) => {
   try {
@@ -105,5 +91,16 @@ exports.getAllPosts = async (req, res) => {
     res.json(allPosts);
   } catch (error) {
     res.status(500).json(error);
+  }
+};
+
+// GET ALL USERS POSTS ON HIS PROFILE
+exports.getAllUsersPost = async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username });
+    const posts = await Post.find({ userId: user._id });
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json();
   }
 };

@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
 import Post from "./Post";
+import {
+  BackToTopBtn,
+  BtnArrowUp,
+  BtnArrowUpBorder,
+} from "./styles/BackToTopBtnStyles";
 
 const HomepageLayout = () => {
   const [data, setData] = useState([]);
@@ -7,15 +12,28 @@ const HomepageLayout = () => {
     const getData = async () => {
       const req = await fetch("/posts/");
       const res = await req.json();
-      setData(res);
+      setData(
+        res.sort((p1, p2) => {
+          return new Date(p2.createdAt) - new Date(p1.createdAt);
+        })
+      );
     };
     getData();
   }, []);
+
+  const handleToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div>
       {data.map((post) => (
         <Post key={post._id} post={post} />
       ))}
+      <BtnArrowUp onClick={handleToTop}>^</BtnArrowUp>
     </div>
   );
 };

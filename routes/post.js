@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const auth = require("../middleware/auth");
 const {
   createPost,
   updatePost,
@@ -7,7 +8,7 @@ const {
   getPost,
   getAllPosts,
   dislikePost,
-  comment,
+  getAllUsersPost,
 } = require("../controller/post");
 
 // GET ALL POSTS
@@ -16,20 +17,20 @@ router.get("/", getAllPosts);
 // DELTE POST
 router.delete("/:id", deletePost);
 
-// CREATE A POST
-router.post("/create", createPost);
-
 // UPDATE POST
 router.put("/:id", updatePost);
+
+// GET A SINGLE POST
+router.get("/:id", getPost);
+
+// CREATE A POST
+router.post("/create", createPost);
 
 // LIKE-DISLIKE POST
 router.put("/:id/like", likeDislikePost);
 router.put("/:id/dislike", dislikePost);
 
-// GET A SINGLE POST
-router.get("/:id", getPost);
-
-// comment
-router.put("/comment", comment);
+// GET ALL USERS POSTS
+router.get("/profile/:username", getAllUsersPost);
 
 module.exports = router;

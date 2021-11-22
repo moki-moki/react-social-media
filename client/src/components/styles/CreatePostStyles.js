@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const ShareContainer = styled.div`
   max-width: 1140px;
   width: 100%;
-  height: 90vh;
   margin: 1em auto;
   color: ${({ theme }) => theme.colors.text};
 `;

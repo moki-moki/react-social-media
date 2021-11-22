@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useContext, useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router";
+import { AuthContext } from "./context/AuthContext";
 import {
   PostCardContainer,
   PostCardContentContainer,
@@ -8,18 +9,23 @@ import {
   PostCardWrapper,
   PostCardUserInfo,
   PostCardUserImg,
+  PostCardButtonDelete,
 } from "./styles/PostCardStyles";
 
 const SinglePost = () => {
   const { id } = useParams();
+  const history = useHistory();
   const [postData, setPostData] = useState();
   const [userPost, setUserPost] = useState({});
+
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const getData = async () => {
       const req = await fetch(`/posts/${id}`);
       const data = await req.json();
       setPostData(data);
+      console.log(data);
     };
     getData();
   }, []);
@@ -31,12 +37,21 @@ const SinglePost = () => {
       );
       const data = await req.json();
       setUserPost(data);
-      console.log(data);
     };
     fetchPostData();
   }, [postData]);
 
-  console.log(postData);
+  const deletePost = async (id) => {
+    try {
+      await fetch(`/posts/${id}`, {
+        method: "DELETE",
+      });
+      history.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {postData === undefined ? (
@@ -46,10 +61,12 @@ const SinglePost = () => {
           <PostCardContentContainer>
             <PostCardUserContainer>
               <PostCardDesc>{postData.desc}</PostCardDesc>
-              <img
-                style={{ margin: "1em 0" }}
-                src={"http://localhost:5000/images/" + postData.img}
-              />
+              {postData["img"] ? (
+                <img
+                  style={{ margin: "1em 0", width: "100%" }}
+                  src={"http://localhost:5000/images/" + postData.img}
+                />
+              ) : null}
               <PostCardWrapper>
                 <PostCardUserInfo>
                   <span style={{ color: "#fff" }}> Posted by: </span>
@@ -58,11 +75,20 @@ const SinglePost = () => {
 https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
         `}
                   />
-                  <p style={{ color: "#fff" }}>{userPost.username}</p>
+                  <p
+                    style={{
+                      color: "#fff",
+                    }}
+                  >
+                    {userPost.username}
+                  </p>
                 </PostCardUserInfo>
                 <div>
-                  <button>Like</button>
-                  <button>Dislike</button>
+                  {user.user._id === postData.userId ? (
+                    <PostCardButtonDelete onClick={() => deletePost(id)}>
+                      &#10060;
+                    </PostCardButtonDelete>
+                  ) : null}
                 </div>
               </PostCardWrapper>
             </PostCardUserContainer>

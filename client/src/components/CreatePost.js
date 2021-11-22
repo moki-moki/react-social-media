@@ -82,7 +82,7 @@ const CreatePost = () => {
           ref={desc}
         />
         <span style={{ marginTop: "1em " }}>Share Photo or a Video</span>
-        <label htmlFor="file" style={{ margin: "1em 0" }}>
+        <label htmlFor="file" style={{ marginTop: "1em" }}>
           <div style={{ textAlign: "center" }}>
             <FormPlustBorder>
               <FormPlus>&#43;</FormPlus>
@@ -95,8 +95,16 @@ const CreatePost = () => {
             onChange={(e) => setFileName(e.target.files[0])}
           />
         </label>
-        {fileName && <img src={URL.createObjectURL(fileName)} alt="img" />}
-        <FormBtnSubmit type="submit">Share</FormBtnSubmit>
+        {fileName && (
+          <img
+            style={{ margin: "1em 0", maxWidth: "100%", maxHeight: "1000px" }}
+            src={URL.createObjectURL(fileName)}
+            alt="img"
+          />
+        )}
+        <FormBtnSubmit style={{ marginTop: "1em" }} type="submit">
+          Share
+        </FormBtnSubmit>
       </ShareForm>
     </ShareContainer>
   );
