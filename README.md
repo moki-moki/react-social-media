@@ -2,7 +2,8 @@
 # Personal project ment to mimic social media functionality.
 I've created this project with MERN stack.
 
-https://user-images.githubusercontent.com/88168610/142913274-b651d862-a7f8-4a8f-8335-dcfa9a40aecc.mp4
+https://user-images.githubusercontent.com/88168610/146541919-1f36f0a5-f5a8-4fe4-8424-b2339a833f09.mp4
+
 
 ## TODO
 - [ ] Adding a friend
