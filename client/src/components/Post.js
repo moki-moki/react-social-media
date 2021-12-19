@@ -15,7 +15,9 @@ import {
   PostCardWrapper,
 } from "./styles/PostCardStyles";
 import { Link } from "react-router-dom";
+import DeletePostModal from "./DeletePostModal";
 import moment from "moment";
+import { likeHelper, dislikeHelper, fetchPostData } from "./utils/apiHelpers";
 
 const Post = ({ post }) => {
   const [like, setLike] = useState(post.likes.length);
@@ -23,6 +25,7 @@ const Post = ({ post }) => {
   const [isDislike, setIsDislike] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [userPost, setUserPost] = useState({});
+  const [openModal, setOpenModal] = useState(false);
 
   const { user } = useContext(AuthContext);
 
@@ -35,51 +38,34 @@ const Post = ({ post }) => {
       userId: user.user._id,
     }),
   };
-  console.log(post);
 
   useEffect(() => {
     setIsLiked(post.likes.includes(user.user._id));
     setIsDislike(post.dislikes.includes(user.user._id));
   }, [user._id, post.likes, post.dislikes]);
 
+  // fetching post data
   useEffect(() => {
-    const fetchPostData = async () => {
-      const req = await fetch(`/user?userId=${post.userId}`);
-      const data = await req.json();
-      setUserPost(data);
-    };
-    fetchPostData();
+    fetchPostData(post.userId).then((data) => setUserPost(data));
   }, [post.userId]);
 
+  // like func
   const likeHandle = async () => {
-    try {
-      await fetch("/posts/" + post._id + "/like", myInit);
-    } catch (error) {
-      console.log(error);
-    }
+    likeHelper(post._id, myInit);
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
 
+  // dislike func
   const dislikeHandle = async () => {
-    try {
-      await fetch("/posts/" + post._id + "/dislike", myInit);
-    } catch (error) {
-      console.log(error);
-    }
+    dislikeHelper(post._id, myInit);
     setDislike(isDislike ? dislike - 1 : dislike + 1);
     setIsDislike(!isDislike);
   };
 
+  // deleting post
   const deletePost = async (id) => {
-    try {
-      await fetch(`/posts/${id}`, {
-        method: "DELETE",
-      });
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-    }
+    setOpenModal(!openModal);
   };
 
   return (
@@ -139,6 +125,14 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
               <PostCardButtonDelete onClick={() => deletePost(post._id)}>
                 &#10060;
               </PostCardButtonDelete>
+            ) : null}
+            {/* modal for delete */}
+            {openModal ? (
+              <DeletePostModal
+                setOpenModal={setOpenModal}
+                openModal={openModal}
+                id={post._id}
+              />
             ) : null}
           </PostCardBottomBar>
         </PostCardUserContainer>

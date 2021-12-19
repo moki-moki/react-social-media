@@ -29,3 +29,10 @@ export const NavUserImg = styled.img`
   margin: 0 1em;
   border-radius: 50%;
 `;
+
+export const NavUsername = styled.h3`
+  transition: 0.2s ease color;
+  &:hover {
+    color: ${({ theme }) => theme.colors.orangeBtn};
+  }
+`;

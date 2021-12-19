@@ -4,6 +4,7 @@ import {
   NavLeftSide,
   NavUserContainer,
   NavUserImg,
+  NavUsername,
 } from "./styles/NavbarStyles";
 
 const Navbar = ({ user }) => {
@@ -20,7 +21,7 @@ const Navbar = ({ user }) => {
       </NavLeftSide>
       <Link to={`/profile/${user.username}`}>
         <NavUserContainer>
-          <h3>{user.username}</h3>
+          <NavUsername>{user.username}</NavUsername>
           <NavUserImg
             src={`https://avatars.dicebear.com/api/identicon/${user.username}.svg`}
           />

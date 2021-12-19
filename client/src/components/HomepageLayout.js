@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
 import Post from "./Post";
-import {
-  BackToTopBtn,
-  BtnArrowUp,
-  BtnArrowUpBorder,
-} from "./styles/BackToTopBtnStyles";
+import { BtnArrowUp } from "./styles/BackToTopBtnStyles";
 
 const HomepageLayout = () => {
   const [data, setData] = useState([]);
+
   useEffect(() => {
     const getData = async () => {
       const req = await fetch("/posts/");

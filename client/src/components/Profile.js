@@ -1,6 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import { AuthContext } from "./context/AuthContext";
 import { useParams } from "react-router";
+import DeletePostModal from "./DeletePostModal";
 import {
   PostCardContainer,
   PostCardContentContainer,
@@ -16,6 +17,7 @@ const Profile = () => {
   const username = useParams().username;
   const { user } = useContext(AuthContext);
   const [posts, setPosts] = useState();
+  const [openModal, setOpenModal] = useState(false);
   console.log(username);
 
   useEffect(() => {
@@ -29,14 +31,15 @@ const Profile = () => {
   }, []);
 
   const deletePost = async (id) => {
-    try {
-      await fetch(`/posts/${id}`, {
-        method: "DELETE",
-      });
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-    }
+    setOpenModal(!openModal);
+    // try {
+    //   await fetch(`/posts/${id}`, {
+    //     method: "DELETE",
+    //   });
+    //   window.location.reload();
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (
@@ -73,6 +76,14 @@ https://avatars.dicebear.com/api/identicon/${username}.svg
                         >
                           &#10060;
                         </PostCardButtonDelete>
+                      ) : null}
+                      {/* modal for delete */}
+                      {openModal ? (
+                        <DeletePostModal
+                          setOpenModal={setOpenModal}
+                          openModal={openModal}
+                          id={post._id}
+                        />
                       ) : null}
                     </div>
                   </PostCardWrapper>

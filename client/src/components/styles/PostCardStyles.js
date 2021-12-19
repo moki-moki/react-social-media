@@ -72,9 +72,10 @@ export const PostCardButtonDelete = styled.button`
   font-size: 1.5em;
   transition: 0.2s ease all;
   cursor: pointer;
-
+  color: ${({ theme }) => theme.colors.text};
   &:hover {
     border-radius: 10px;
+    background: ${({ theme }) => theme.colors.editBtn};
   }
   &:active {
     background: ${({ theme }) => theme.colors.editBtn};

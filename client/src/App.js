@@ -1,10 +1,9 @@
-import { Profiler, useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { ThemeProvider } from "styled-components";
 import { AuthContext } from "./components/context/AuthContext";
 
 // Style
 import GlobalStyles from "./components/styles/GlobalStyles";
-import theme from "./components/styles/theme";
 
 // Routing
 import {
@@ -23,6 +22,7 @@ import CreatePost from "./components/CreatePost";
 import SinglePost from "./components/SinglePost";
 import Profile from "./components/Profile";
 
+import theme from "./components/styles/theme";
 function App() {
   const { user } = useContext(AuthContext);
 
