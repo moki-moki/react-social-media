@@ -10,26 +10,69 @@ import {
   PostCardUserInfo,
   PostCardUserImg,
   PostCardButtonDelete,
+  PostCardBtnContainer,
+  PostCardButtonsLike,
+  PostCardButtonsDislike,
+  PostCardBottomBar,
 } from "./styles/PostCardStyles";
+import { dislikeHelper, likeHelper } from "./utils/apiHelpers";
 
 const SinglePost = () => {
   const { id } = useParams();
-  const history = useHistory();
-  const [postData, setPostData] = useState();
-  const [userPost, setUserPost] = useState({});
-
   const { user } = useContext(AuthContext);
+  const history = useHistory();
+  const [postData, setPostData] = useState({});
+  const [userPost, setUserPost] = useState({});
+  // like func
+  const [like, setLike] = useState(0);
+  const [dislike, setDislike] = useState(0);
+  const [isDislike, setIsDislike] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
+  const myInit = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userId: user.user._id,
+    }),
+  };
+
+  // like func
+  const likeHandle = async () => {
+    likeHelper(postData._id, myInit);
+    setLike(isLiked ? like - 1 : like + 1);
+    setIsLiked(!isLiked);
+  };
+
+  // dislike func
+  const dislikeHandle = async () => {
+    dislikeHelper(postData._id, myInit);
+    setDislike(isDislike ? dislike - 1 : dislike + 1);
+    setIsDislike(!isDislike);
+  };
+
+  // get posts data
   useEffect(() => {
     const getData = async () => {
       const req = await fetch(`/posts/${id}`);
       const data = await req.json();
       setPostData(data);
+      setLike(data.likes.length);
+      setDislike(data.dislikes.length);
       console.log(data);
     };
     getData();
   }, []);
 
+  // like dislike funk
+  useEffect(() => {
+    setIsLiked(postData ? 0 : postData.likes.includes(user.user._id));
+    setIsDislike(postData ? 0 : postData.dislikes.includes(user.user._id));
+  }, [user._id, postData.likes, postData.dislikes]);
+
+  // get users data for a post
   useEffect(() => {
     const fetchPostData = async () => {
       const req = await fetch(
@@ -41,6 +84,7 @@ const SinglePost = () => {
     fetchPostData();
   }, [postData]);
 
+  // deletes a post duuh...
   const deletePost = async (id) => {
     try {
       await fetch(`/posts/${id}`, {
@@ -83,16 +127,34 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
                     {userPost.username}
                   </p>
                 </PostCardUserInfo>
-                <div>
-                  {user.user._id === postData.userId ? (
-                    <PostCardButtonDelete onClick={() => deletePost(id)}>
-                      &#10060;
-                    </PostCardButtonDelete>
-                  ) : null}
-                </div>
               </PostCardWrapper>
             </PostCardUserContainer>
           </PostCardContentContainer>
+          {/* LIKE DISLIKE */}
+          <PostCardBottomBar>
+            <PostCardBtnContainer>
+              <PostCardButtonsLike
+                style={{ backgroundColor: isLiked ? "#09c372" : "transparent" }}
+                onClick={likeHandle}
+              >
+                &#128077; {like > 0 ? like : null}
+              </PostCardButtonsLike>
+              <PostCardButtonsDislike
+                style={{
+                  backgroundColor: isDislike ? "#ff3860" : "transparent",
+                }}
+                onClick={dislikeHandle}
+              >
+                &#128169;{dislike > 0 ? dislike : null}
+              </PostCardButtonsDislike>
+            </PostCardBtnContainer>
+
+            {user.user._id === postData.userId ? (
+              <PostCardButtonDelete onClick={() => deletePost(id)}>
+                &#10060;
+              </PostCardButtonDelete>
+            ) : null}
+          </PostCardBottomBar>
         </PostCardContainer>
       )}
     </>

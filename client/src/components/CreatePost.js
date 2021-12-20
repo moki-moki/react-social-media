@@ -1,5 +1,6 @@
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "./context/AuthContext";
+import NotificationSuccess from "./NotificationSuccess";
 import {
   FormBtnSubmit,
   FormInput,
@@ -9,15 +10,15 @@ import {
   ShareContainer,
   ShareForm,
 } from "./styles/CreatePostStyles";
+import { createPost, uploadPost } from "./utils/apiHelpers";
 
 const CreatePost = () => {
   const [fileName, setFileName] = useState(null);
+  const [showNotification, setShowNotification] = useState(false);
   const desc = useRef();
   const { user } = useContext(AuthContext);
 
   console.log(fileName);
-
-  const redirect = () => (window.location = "/");
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -25,7 +26,6 @@ const CreatePost = () => {
     const newPost = {
       userId: user.user._id,
       desc: desc.current.value,
-      // img: "",
     };
 
     if (fileName) {
@@ -37,42 +37,37 @@ const CreatePost = () => {
       newPost.img = fileNameStored;
 
       console.log(newPost);
+
       try {
-        await fetch("/upload", {
-          method: "POST",
-          body: data,
-        })
-          .then((res) => res.json())
-          .then((data) => console.log(data));
+        // uploads posts content
+        await uploadPost(data);
       } catch (error) {
         console.log(error);
       }
     }
+
+    // uploads the post
     try {
-      await fetch("/posts/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          desc: newPost.desc,
-          img: newPost.img,
-          userId: newPost.userId,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => console.log(data));
-      redirect();
+      if (newPost.desc !== "" || newPost.img !== null) {
+        createPost(newPost.desc, newPost.img, newPost.userId);
+        setShowNotification(true);
+        setTimeout(() => {
+          setShowNotification(false);
+        }, 3000);
+      } else {
+        console.log(newPost);
+        return;
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const fileSubmitHandler = (e) => {
-    e.preventDefault();
-    console.log(`selected: ${e.target.files[0].name} `);
-    setFileName(e.target.files[0].name);
-  };
+  // const fileSubmitHandler = (e) => {
+  //   e.preventDefault();
+  //   console.log(`selected: ${e.target.files[0].name} `);
+  //   setFileName(e.target.files[0].name);
+  // };
 
   return (
     <ShareContainer>
@@ -105,6 +100,7 @@ const CreatePost = () => {
         <FormBtnSubmit style={{ marginTop: "1em" }} type="submit">
           Share
         </FormBtnSubmit>
+        {showNotification ? <NotificationSuccess /> : null}
       </ShareForm>
     </ShareContainer>
   );

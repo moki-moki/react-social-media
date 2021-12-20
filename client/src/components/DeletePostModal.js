@@ -9,8 +9,6 @@ import { deletePostHelper } from "./utils/apiHelpers";
 const DeletePostModal = ({ id, setOpenModal, openModal }) => {
   const deletePost = async (id) => {
     deletePostHelper(id);
-    window.location.reload();
-    return false;
   };
 
   const closeModal = () => {

@@ -12,6 +12,7 @@ import {
   PostCardUserImg,
   PostCardButtonDelete,
 } from "./styles/PostCardStyles";
+import NotificationSuccess from "./NotificationSuccess";
 
 const Profile = () => {
   const username = useParams().username;

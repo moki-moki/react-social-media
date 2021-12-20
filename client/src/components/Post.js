@@ -64,7 +64,7 @@ const Post = ({ post }) => {
   };
 
   // deleting post
-  const deletePost = async (id) => {
+  const deletePost = async () => {
     setOpenModal(!openModal);
   };
 

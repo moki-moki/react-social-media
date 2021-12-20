@@ -66,5 +66,6 @@ export const FormBtnSubmit = styled.button`
   &:hover {
     background: ${({ theme }) => theme.colors.editBtn};
     border-radius: 0;
+    cursor: pointer;
   }
 `;
