@@ -1,3 +1,4 @@
+import { useHistory } from "react-router-dom";
 import {
   Close,
   DeleteModalContainer,
@@ -8,7 +9,8 @@ import { deletePostHelper } from "./utils/apiHelpers";
 
 const DeletePostModal = ({ id, setOpenModal, openModal }) => {
   const deletePost = async (id) => {
-    deletePostHelper(id);
+    await deletePostHelper(id);
+    await window.location.reload();
   };
 
   const closeModal = () => {

@@ -48,7 +48,7 @@ const CreatePost = () => {
 
     // uploads the post
     try {
-      if (newPost.desc !== "" || newPost.img !== null) {
+      if (desc.current.value !== "" || newPost.img !== null) {
         createPost(newPost.desc, newPost.img, newPost.userId);
         setShowNotification(true);
         setTimeout(() => {

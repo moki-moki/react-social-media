@@ -19,7 +19,8 @@ const Navbar = ({ user }) => {
         </Link>
         <Link to="/createPost">Create a post</Link>
       </NavLeftSide>
-      <Link to={`/profile/${user.username}`}>
+      {/* <Link to={`/profile/${user.username}`}> */}
+      <Link to={`/profile/${user.username}/${user._id}`}>
         <NavUserContainer>
           <NavUsername>{user.username}</NavUsername>
           <NavUserImg

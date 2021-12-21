@@ -88,7 +88,7 @@ exports.getPost = async (req, res) => {
 exports.getAllPosts = async (req, res) => {
   try {
     const allPosts = await Post.find({});
-    res.json(allPosts);
+    res.status(200).json(allPosts);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -97,7 +97,12 @@ exports.getAllPosts = async (req, res) => {
 // GET ALL USERS POSTS ON HIS PROFILE
 exports.getAllUsersPost = async (req, res) => {
   try {
+    // const user = await User.findOne({ id: req.params.id});
+    // console.log(user);
+    // const posts = await Post.find({ userId: user.username });
+    console.log(req.params);
     const user = await User.findOne({ username: req.params.username });
+    console.log(user);
     const posts = await Post.find({ userId: user._id });
     res.status(200).json(posts);
   } catch (error) {

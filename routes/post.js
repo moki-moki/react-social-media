@@ -31,6 +31,6 @@ router.put("/:id/like", likeDislikePost);
 router.put("/:id/dislike", dislikePost);
 
 // GET ALL USERS POSTS
-router.get("/profile/:username", getAllUsersPost);
+router.get("/profile/:username/:id", getAllUsersPost);
 
 module.exports = router;

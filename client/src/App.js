@@ -49,7 +49,7 @@ function App() {
           <Route path="/posts/:id">
             {user ? <SinglePost /> : <RegisterLayout />}
           </Route>
-          <Route path="/profile/:username">
+          <Route path="/profile/:username/:id">
             {user ? <Profile /> : <RegisterLayout />}
           </Route>
         </Switch>

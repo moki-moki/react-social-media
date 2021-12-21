@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { AuthContext } from "./context/AuthContext";
+import DeletePostModal from "./DeletePostModal";
 import {
   PostCardContainer,
   PostCardContentContainer,
@@ -28,6 +29,7 @@ const SinglePost = () => {
   const [dislike, setDislike] = useState(0);
   const [isDislike, setIsDislike] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const myInit = {
     method: "PUT",
@@ -86,14 +88,15 @@ const SinglePost = () => {
 
   // deletes a post duuh...
   const deletePost = async (id) => {
-    try {
-      await fetch(`/posts/${id}`, {
-        method: "DELETE",
-      });
-      history.push("/");
-    } catch (error) {
-      console.log(error);
-    }
+    setOpenModal(!openModal);
+    // try {
+    //   await fetch(`/posts/${id}`, {
+    //     method: "DELETE",
+    //   });
+    //   history.push("/");
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (
@@ -155,6 +158,14 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
               </PostCardButtonDelete>
             ) : null}
           </PostCardBottomBar>
+          {/* DELETE */}
+          {openModal ? (
+            <DeletePostModal
+              setOpenModal={setOpenModal}
+              openModal={openModal}
+              id={postData._id}
+            />
+          ) : null}
         </PostCardContainer>
       )}
     </>

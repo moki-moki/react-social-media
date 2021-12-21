@@ -74,7 +74,7 @@ const Post = ({ post }) => {
         <PostCardUserContainer>
           <PostCardWrapper>
             <PostCardUserInfo>
-              <Link to={`/profile/${userPost.username}`}>
+              <Link to={`/profile/${userPost.username}/${userPost._id}`}>
                 <PostCardUserImg
                   src={`
 https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
@@ -86,7 +86,7 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
             <div>
               <p>
                 Posted At:
-                <span style={{ color: "#fff" }}>
+                <span style={{ color: "#fff", margin: "0 0.3em" }}>
                   {moment(post.createdAt).format("DD MMM  HH:mm")}
                 </span>
               </p>
