@@ -5,9 +5,7 @@ import {
   AboutMainContainer,
   FaqContainer,
   FaqHeading,
-  FaqQuestion,
   FaqQuestionsContainer,
-  FaqQuestionText,
 } from "./styles/AboutStyles";
 
 const About = () => {

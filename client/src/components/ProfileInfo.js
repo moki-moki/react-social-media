@@ -1,19 +1,12 @@
-import { useEffect } from "react";
 import {
-  EditBtn,
   ProfileCardContainer,
   ProfileInfoContainer,
   ProfilePicture,
   ProfilePictureContainer,
-  ProfilePictureEditCircle,
   ProfilePictureWrapper,
 } from "./styles/ProfileStyles/ProfileStyles";
 
-const ProfileInfo = ({ user, name, id }) => {
-  useEffect(() => {
-    console.log(user);
-  }, []);
-
+const ProfileInfo = ({ name }) => {
   return (
     <ProfileCardContainer>
       <ProfilePictureContainer>
@@ -23,12 +16,6 @@ const ProfileInfo = ({ user, name, id }) => {
 https://avatars.dicebear.com/api/identicon/${name}.svg
                 `}
           />
-
-          {user.user._id === id ? (
-            <ProfilePictureEditCircle>
-              <EditBtn>&#128295;</EditBtn>
-            </ProfilePictureEditCircle>
-          ) : null}
         </ProfilePictureWrapper>
       </ProfilePictureContainer>
       <ProfileInfoContainer>

@@ -9,6 +9,7 @@ import {
   PostCardContainer,
   PostCardContentContainer,
   PostCardDesc,
+  PostCardLink,
   PostCardUserContainer,
   PostCardUserImg,
   PostCardUserInfo,
@@ -42,7 +43,7 @@ const Post = ({ post }) => {
   useEffect(() => {
     setIsLiked(post.likes.includes(user.user._id));
     setIsDislike(post.dislikes.includes(user.user._id));
-  }, [user._id, post.likes, post.dislikes]);
+  }, [user.user._id, post.likes, post.dislikes]);
 
   // fetching post data
   useEffect(() => {
@@ -94,9 +95,7 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
           </PostCardWrapper>
           <div style={{ width: "100%" }}>
             <PostCardDesc>
-              <Link style={{ color: "#b2becd" }} to={`/posts/${post._id}`}>
-                {post.desc}
-              </Link>
+              <PostCardLink to={`/posts/${post._id}`}>{post.desc}</PostCardLink>
             </PostCardDesc>
           </div>
           <img

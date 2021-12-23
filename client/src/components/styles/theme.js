@@ -14,11 +14,4 @@ const theme = {
   },
 };
 
-const lightTheme = {
-  body: "hsla(0,0%,97.3%,0.58)",
-  text: "454e56",
-  heading: "12181b",
-  cardBg: "#fff",
-};
-
 export default theme;

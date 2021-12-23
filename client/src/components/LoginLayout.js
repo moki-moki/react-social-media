@@ -2,6 +2,7 @@ import { useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import { loginCall } from "./auth/apiCalls";
 import { AuthContext } from "./context/AuthContext";
+import NotificationFail from "./NotificationFail";
 import { FormButton, FormControl, Input, SpanForm } from "./styles/FormStyles";
 
 const LoginLayout = () => {
@@ -17,7 +18,6 @@ const LoginLayout = () => {
     );
   };
 
-  console.log(user);
   return (
     <div>
       <FormControl onSubmit={handleLogin}>
@@ -44,6 +44,7 @@ const LoginLayout = () => {
           Don't have an account? <Link to="/register">Register</Link>
         </SpanForm>
       </FormControl>
+      {error ? <NotificationFail /> : null}
     </div>
   );
 };

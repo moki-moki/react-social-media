@@ -89,14 +89,6 @@ const SinglePost = () => {
   // deletes a post duuh...
   const deletePost = async (id) => {
     setOpenModal(!openModal);
-    // try {
-    //   await fetch(`/posts/${id}`, {
-    //     method: "DELETE",
-    //   });
-    //   history.push("/");
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
 
   return (

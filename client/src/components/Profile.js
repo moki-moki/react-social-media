@@ -6,7 +6,6 @@ import ProfilePosts from "./ProfilePosts";
 
 const Profile = () => {
   const { username, id } = useParams();
-  console.log(useParams());
   const { user } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
   const [info, setInfo] = useState({});
@@ -38,7 +37,7 @@ const Profile = () => {
         <h1>Loading..</h1>
       ) : (
         <>
-          <ProfileInfo user={user} name={name} id={_id} />
+          <ProfileInfo name={name} />
           <ProfilePosts id={id} posts={posts} />
         </>
       )}

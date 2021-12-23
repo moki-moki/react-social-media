@@ -1,3 +1,13 @@
+export const getPosts = async () => {
+  try {
+    const req = await fetch("/posts/");
+    const res = await req.json();
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const likeHelper = async (id, myInit) => {
   try {
     return await fetch("/posts/" + id + "/like", myInit);

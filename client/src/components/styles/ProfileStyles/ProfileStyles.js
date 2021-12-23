@@ -8,6 +8,7 @@ export const ProfileCardContainer = styled.div`
   padding: 1em;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  position: relative;
 `;
 
 export const ProfileInfoContainer = styled.div`

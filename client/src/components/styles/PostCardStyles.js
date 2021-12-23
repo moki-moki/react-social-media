@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const PostCardContainer = styled.div`
@@ -130,5 +131,15 @@ export const PostCardButtonsLike = styled.button`
 
   &:focus {
     background: ${({ theme }) => theme.colors.greenBtn};
+  }
+`;
+
+export const PostCardLink = styled(Link)`
+  color: ${({ theme }) => theme.colors.text};
+  transition: 0.3s ease color;
+  width: 100%;
+  display: inline-block;
+  &:hover {
+    color: ${({ theme }) => theme.colors.heading};
   }
 `;

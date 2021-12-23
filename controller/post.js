@@ -11,8 +11,7 @@ exports.createPost = async (req, res, next) => {
     const savedPost = await newPost.save();
     res.status(200).json(savedPost);
   } catch (error) {
-    //return next(new ErrorResponse("You can update only your post"), 500);
-    //    res.status(500).json(error);
+    res.status(500).json(error);
   }
 };
 
@@ -25,7 +24,6 @@ exports.updatePost = async (req, res) => {
       res.status(200).json("the post had been updated");
     }
   } catch (error) {
-    //    return next(new ErrorResponse("You can update only your post"), 403);
     res.status(403).json(error);
   }
 };
@@ -97,12 +95,7 @@ exports.getAllPosts = async (req, res) => {
 // GET ALL USERS POSTS ON HIS PROFILE
 exports.getAllUsersPost = async (req, res) => {
   try {
-    // const user = await User.findOne({ id: req.params.id});
-    // console.log(user);
-    // const posts = await Post.find({ userId: user.username });
-    console.log(req.params);
     const user = await User.findOne({ username: req.params.username });
-    console.log(user);
     const posts = await Post.find({ userId: user._id });
     res.status(200).json(posts);
   } catch (error) {

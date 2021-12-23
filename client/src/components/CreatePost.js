@@ -1,5 +1,6 @@
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "./context/AuthContext";
+import NotificationFail from "./NotificationFail";
 import NotificationSuccess from "./NotificationSuccess";
 import {
   FormBtnSubmit,
@@ -15,10 +16,9 @@ import { createPost, uploadPost } from "./utils/apiHelpers";
 const CreatePost = () => {
   const [fileName, setFileName] = useState(null);
   const [showNotification, setShowNotification] = useState(false);
+  const [showNotificationError, setShowNotificationError] = useState(false);
   const desc = useRef();
   const { user } = useContext(AuthContext);
-
-  console.log(fileName);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -36,12 +36,11 @@ const CreatePost = () => {
       console.log(fileNameStored);
       newPost.img = fileNameStored;
 
-      console.log(newPost);
-
       try {
         // uploads posts content
         await uploadPost(data);
       } catch (error) {
+        setShowNotificationError(true);
         console.log(error);
       }
     }
@@ -59,15 +58,10 @@ const CreatePost = () => {
         return;
       }
     } catch (error) {
+      setShowNotificationError(true);
       console.log(error);
     }
   };
-
-  // const fileSubmitHandler = (e) => {
-  //   e.preventDefault();
-  //   console.log(`selected: ${e.target.files[0].name} `);
-  //   setFileName(e.target.files[0].name);
-  // };
 
   return (
     <ShareContainer>
@@ -100,7 +94,10 @@ const CreatePost = () => {
         <FormBtnSubmit style={{ marginTop: "1em" }} type="submit">
           Share
         </FormBtnSubmit>
+        {/* success msg */}
         {showNotification ? <NotificationSuccess /> : null}
+        {/* error msg */}
+        {showNotificationError ? <NotificationFail /> : null}
       </ShareForm>
     </ShareContainer>
   );

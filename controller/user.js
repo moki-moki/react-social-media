@@ -17,3 +17,22 @@ exports.getUser = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+// Edit users profile (username)
+exports.editUsersProfile = async (req, res) => {
+  const newName = req.body.username;
+  const id = req.body.id;
+  try {
+    await User.findById(id, (err, updateProfile) => {
+      updateProfile.username = newName;
+      updateProfile.save();
+      res.send("updated");
+    })
+      .clone()
+      .catch((err) => {
+        console.log(err);
+      });
+  } catch (error) {
+    res.status(500).json();
+  }
+};
