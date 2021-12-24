@@ -6,9 +6,7 @@ import {
 const NotificationSuccess = () => {
   return (
     <NotificationSuccessContainer>
-      <NotificationSuccessText>
-        Your post was uploaded, refresh the page please.
-      </NotificationSuccessText>
+      <NotificationSuccessText>Your post was uploaded.</NotificationSuccessText>
     </NotificationSuccessContainer>
   );
 };

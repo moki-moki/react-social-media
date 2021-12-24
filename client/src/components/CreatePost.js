@@ -1,4 +1,5 @@
 import { useContext, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 import NotificationFail from "./NotificationFail";
 import NotificationSuccess from "./NotificationSuccess";
@@ -17,8 +18,10 @@ const CreatePost = () => {
   const [fileName, setFileName] = useState(null);
   const [showNotification, setShowNotification] = useState(false);
   const [showNotificationError, setShowNotificationError] = useState(false);
-  const desc = useRef();
   const { user } = useContext(AuthContext);
+  const desc = useRef();
+
+  const history = useHistory();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -52,6 +55,7 @@ const CreatePost = () => {
         setShowNotification(true);
         setTimeout(() => {
           setShowNotification(false);
+          history.push("/");
         }, 3000);
       } else {
         console.log(newPost);

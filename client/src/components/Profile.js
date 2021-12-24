@@ -3,38 +3,28 @@ import { AuthContext } from "./context/AuthContext";
 import { useParams } from "react-router";
 import ProfileInfo from "./ProfileInfo";
 import ProfilePosts from "./ProfilePosts";
+import Loader from "./Loader";
+import { fetchPostData, fetchProfileData } from "./utils/apiHelpers";
 
 const Profile = () => {
   const { username, id } = useParams();
-  const { user } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
   const [info, setInfo] = useState({});
   const { username: name, _id } = info;
 
   useEffect(() => {
-    const fetchData = async () => {
-      const req = await fetch(`/posts/profile/${username}/${id}`);
-      const data = await req.json();
-      setPosts(data);
-      console.log(data);
-    };
-    fetchData();
+    fetchProfileData(username, id).then((data) => setPosts(data));
   }, []);
 
   // get user info
   useEffect(() => {
-    const getUser = async () => {
-      const request = await fetch(`/user?userId=${id}`);
-      const res = await request.json();
-      setInfo(res);
-    };
-    getUser();
+    fetchPostData(id).then((data) => setInfo(data));
   }, []);
 
   return (
     <>
-      {posts === undefined ? (
-        <h1>Loading..</h1>
+      {posts.length === 0 && name === undefined ? (
+        <Loader />
       ) : (
         <>
           <ProfileInfo name={name} />

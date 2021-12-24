@@ -17,7 +17,7 @@ const DeletePostModal = ({ id, setOpenModal, openModal }) => {
     setOpenModal(!openModal);
   };
   return (
-    <DeleteModalMainContainer ref={modalRef}>
+    <DeleteModalMainContainer>
       <DeleteModalContainer>
         <Close onClick={() => closeModal()}>&#10060;</Close>
         <h1>Are you sure you want to delete this post?</h1>

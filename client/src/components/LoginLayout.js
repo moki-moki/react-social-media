@@ -45,6 +45,7 @@ const LoginLayout = () => {
         </SpanForm>
       </FormControl>
       {error ? <NotificationFail /> : null}
+      {user === undefined ? <NotificationFail /> : null}
     </div>
   );
 };
