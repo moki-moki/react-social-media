@@ -6,6 +6,7 @@ import {
   PostCardButtonDelete,
   PostCardButtonsDislike,
   PostCardButtonsLike,
+  PostCardCommentContainer,
   PostCardContainer,
   PostCardContentContainer,
   PostCardDesc,
@@ -19,6 +20,7 @@ import { Link } from "react-router-dom";
 import DeletePostModal from "./DeletePostModal";
 import moment from "moment";
 import { likeHelper, dislikeHelper, fetchPostData } from "./utils/apiHelpers";
+import { SinglePostCommentBtn } from "./styles/SinglePostStyles";
 
 const Post = ({ post }) => {
   const [like, setLike] = useState(post.likes.length);
@@ -40,15 +42,15 @@ const Post = ({ post }) => {
     }),
   };
 
-  useEffect(() => {
-    setIsLiked(post.likes.includes(user.user._id));
-    setIsDislike(post.dislikes.includes(user.user._id));
-  }, [user.user._id, post.likes, post.dislikes]);
-
   // fetching post data
   useEffect(() => {
     fetchPostData(post.userId).then((data) => setUserPost(data));
   }, [post.userId]);
+
+  useEffect(() => {
+    setIsLiked(post.likes.includes(user.user._id));
+    setIsDislike(post.dislikes.includes(user.user._id));
+  }, [user.user._id, post.likes, post.dislikes]);
 
   // like func
   const likeHandle = async () => {
@@ -119,6 +121,14 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
               >
                 &#128169;{dislike > 0 ? dislike : null}
               </PostCardButtonsDislike>
+
+              {/* comments */}
+              <SinglePostCommentBtn>
+                <Link to={`/posts/${post._id}`}>
+                  &#128172;
+                  {post.comments.length > 0 ? post.comments.length : null}
+                </Link>
+              </SinglePostCommentBtn>
             </PostCardBtnContainer>
             {user.user._id === post.userId ? (
               <PostCardButtonDelete onClick={() => deletePost(post._id)}>

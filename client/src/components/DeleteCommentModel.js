@@ -4,12 +4,11 @@ import {
   DeleteModalMainContainer,
 } from "./styles/DeleteModalStyles/DeleteModalStyles";
 import { PostCardButtonDelete } from "./styles/PostCardStyles";
-import { deletePostHelper, deleteCommentHelper } from "./utils/apiHelpers";
+import { deleteCommentHelper } from "./utils/apiHelpers";
 
-const DeletePostModal = ({ id, setOpenModal, openModal, postId }) => {
-  const deletePost = async (id) => {
-    await deletePostHelper(id);
-    await window.location.reload();
+const DeleteCommentModal = ({ id, setOpenModal, openModal, postId }) => {
+  const deleteComment = async (id, postId) => {
+    await deleteCommentHelper(id, postId);
   };
 
   const closeModal = () => {
@@ -19,8 +18,8 @@ const DeletePostModal = ({ id, setOpenModal, openModal, postId }) => {
     <DeleteModalMainContainer>
       <DeleteModalContainer>
         <Close onClick={() => closeModal()}>&#10060;</Close>
-        <h1>Are you sure you want to delete this comment?</h1>
-        <PostCardButtonDelete onClick={() => deletePost(id)}>
+        <h1>Are you sure you want to delete this post?</h1>
+        <PostCardButtonDelete onClick={() => deleteComment(postId, id)}>
           Delete &#128169;
         </PostCardButtonDelete>
       </DeleteModalContainer>
@@ -28,4 +27,4 @@ const DeletePostModal = ({ id, setOpenModal, openModal, postId }) => {
   );
 };
 
-export default DeletePostModal;
+export default DeleteCommentModal;

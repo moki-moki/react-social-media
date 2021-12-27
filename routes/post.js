@@ -8,6 +8,8 @@ const {
   getAllPosts,
   dislikePost,
   getAllUsersPost,
+  commentPost,
+  deleteComment,
 } = require("../controller/post");
 
 // GET ALL POSTS
@@ -31,5 +33,11 @@ router.put("/:id/dislike", dislikePost);
 
 // GET ALL USERS POSTS
 router.get("/profile/:username/:id", getAllUsersPost);
+
+// post comment
+router.post("/comment/:postId", commentPost);
+
+// delete comment
+router.delete("/delete/:postId/:commentId", deleteComment);
 
 module.exports = router;

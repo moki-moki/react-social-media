@@ -33,7 +33,20 @@ export const PostCardWrapper = styled.div`
   padding: 0 1em;
 `;
 
-export const PostCardUserInfo = styled.div`
+export const PostCardUserInfo = styled(Link)`
+  display: flex;
+  align-items: center;
+  padding: 0.3em;
+  border-radius: 10px;
+  transition: 0.2s ease all;
+  cursor: pointer;
+  &:hover {
+    color: ${({ theme }) => theme.colors.heading};
+    background: rgba(255, 255, 255, 0.1);
+  }
+`;
+
+export const PostCardProfileLink = styled(Link)`
   display: flex;
   align-items: center;
 `;
@@ -44,6 +57,7 @@ export const PostCardDesc = styled.p`
   margin: 1em 0;
   padding: 0 1em;
   width: 100%;
+  transition: 0.2s ease background;
 `;
 
 export const PostCardUserImg = styled.img`
@@ -136,10 +150,20 @@ export const PostCardButtonsLike = styled.button`
 
 export const PostCardLink = styled(Link)`
   color: ${({ theme }) => theme.colors.text};
-  transition: 0.3s ease color;
+  padding: 0.2em;
+  transition: 0.3s ease all;
   width: 100%;
   display: inline-block;
+  border-radius: 10px;
   &:hover {
     color: ${({ theme }) => theme.colors.heading};
+    background: rgba(255, 255, 255, 0.1);
+  }
+`;
+
+export const PostCardDescContainer = styled.p`
+  &:hover {
+    background: ${({ theme }) => theme.colors.text};
+    transition: 0.2s ease background;
   }
 `;

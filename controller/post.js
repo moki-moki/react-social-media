@@ -1,7 +1,7 @@
 const Post = require("../models/Post");
 const User = require("../models/User");
-const auth = require("../middleware/auth");
 const ErrorResponse = require("../utils/errorResponse");
+const uuid = require("uuid").v4;
 
 // CREATE POST
 exports.createPost = async (req, res, next) => {
@@ -37,7 +37,6 @@ exports.deletePost = async (req, res) => {
     }
   } catch (error) {
     return next(new ErrorResponse("You can update only your post"), 500);
-    res.status(500).json(error);
   }
 };
 
@@ -100,5 +99,63 @@ exports.getAllUsersPost = async (req, res) => {
     res.status(200).json(posts);
   } catch (error) {
     res.status(500).json();
+  }
+};
+
+// comment
+exports.commentPost = async (req, res, next) => {
+  try {
+    const { postId } = req.params;
+    const { text, userId } = req.body;
+
+    if (text.length < 1) {
+      return res.status(401).json("comment should be atleast 1 character");
+    }
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return res.status(404).json("Post not found");
+    }
+
+    const newComment = {
+      _id: uuid(),
+      text,
+      user: userId,
+      date: Date.now(),
+    };
+
+    await post.comments.unshift(newComment);
+    await post.save();
+
+    return res.status(200).json(newComment);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json();
+  }
+};
+
+// delete comment
+exports.deleteComment = async (req, res) => {
+  try {
+    const { postId, commentId } = req.params;
+    console.log(postId, commentId);
+
+    const post = await Post.findById(postId);
+
+    const commentIdx = post.comments.findIndex(
+      (comment) => comment._id === commentId
+    );
+
+    if (post) {
+      if (commentIdx === -1) {
+        return res.status(404).json("comment not found");
+      }
+      await post.comments.splice(commentIdx, 1);
+      await post.save();
+      return res.status(200).json("comment deleted");
+    }
+    return res.status(404).json("post not found");
+  } catch (error) {
+    return res.status(500).json("Server error");
   }
 };

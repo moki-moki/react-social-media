@@ -1,5 +1,4 @@
-import { useEffect, useContext, useState } from "react";
-import { AuthContext } from "./context/AuthContext";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import ProfileInfo from "./ProfileInfo";
 import ProfilePosts from "./ProfilePosts";
@@ -10,16 +9,16 @@ const Profile = () => {
   const { username, id } = useParams();
   const [posts, setPosts] = useState([]);
   const [info, setInfo] = useState({});
-  const { username: name, _id } = info;
+  const { username: name } = info;
 
   useEffect(() => {
     fetchProfileData(username, id).then((data) => setPosts(data));
-  }, []);
+    fetchPostData(id).then((data) => setInfo(data));
+  }, [id, username]);
 
   // get user info
-  useEffect(() => {
-    fetchPostData(id).then((data) => setInfo(data));
-  }, []);
+  // useEffect(() => {
+  // }, []);
 
   return (
     <>

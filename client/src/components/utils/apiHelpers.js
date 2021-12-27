@@ -36,6 +36,7 @@ export const deletePostHelper = async (id) => {
 
 export const fetchPostData = async (userId) => {
   const req = await fetch(`/user?userId=${userId}`);
+  console.log(req);
   return await req.json();
 };
 
@@ -75,6 +76,17 @@ export const fetchProfileData = async (username, id) => {
   try {
     const req = await fetch(`/posts/profile/${username}/${id}`);
     return await req.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteCommentHelper = async (id, postId) => {
+  try {
+    await fetch(`/posts/delete/${id}/${postId}`, {
+      method: "DELETE",
+    });
+    await window.location.reload();
   } catch (error) {
     console.log(error);
   }

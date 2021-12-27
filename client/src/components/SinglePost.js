@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import { AuthContext } from "./context/AuthContext";
 import DeletePostModal from "./DeletePostModal";
 import {
@@ -16,12 +16,18 @@ import {
   PostCardButtonsDislike,
   PostCardBottomBar,
 } from "./styles/PostCardStyles";
+import Loader from "./Loader";
 import { dislikeHelper, likeHelper } from "./utils/apiHelpers";
+import Comments from "./Comments";
+import {
+  SinglePostCommentBtn,
+  SinglePostPostedBy,
+  SinglePostUsername,
+} from "./styles/SinglePostStyles";
 
 const SinglePost = () => {
   const { id } = useParams();
   const { user } = useContext(AuthContext);
-  const history = useHistory();
   const [postData, setPostData] = useState({});
   const [userPost, setUserPost] = useState({});
   // like func
@@ -66,13 +72,13 @@ const SinglePost = () => {
       console.log(data);
     };
     getData();
-  }, []);
+  }, [id]);
 
   // like dislike funk
   useEffect(() => {
     setIsLiked(postData ? 0 : postData.likes.includes(user.user._id));
     setIsDislike(postData ? 0 : postData.dislikes.includes(user.user._id));
-  }, [user._id, postData.likes, postData.dislikes]);
+  }, [user.user._id, postData.likes, postData.dislikes, postData]);
 
   // get users data for a post
   useEffect(() => {
@@ -84,17 +90,17 @@ const SinglePost = () => {
       setUserPost(data);
     };
     fetchPostData();
-  }, [postData]);
+  }, [postData, id]);
 
   // deletes a post duuh...
-  const deletePost = async (id) => {
+  const deletePost = () => {
     setOpenModal(!openModal);
   };
 
   return (
     <>
       {postData === undefined ? (
-        <h1>Loading..</h1>
+        <Loader />
       ) : (
         <PostCardContainer>
           <PostCardContentContainer>
@@ -103,24 +109,21 @@ const SinglePost = () => {
               {postData["img"] ? (
                 <img
                   style={{ margin: "1em 0", width: "100%" }}
-                  src={"http://localhost:5000/images/" + postData.img}
+                  src={"http://localhost:5001/images/" + postData.img}
+                  alt="alt"
                 />
               ) : null}
               <PostCardWrapper>
-                <PostCardUserInfo>
-                  <span style={{ color: "#fff" }}> Posted by: </span>
+                <PostCardUserInfo
+                  to={`/profile/${userPost.username}/${userPost._id}`}
+                >
+                  <SinglePostPostedBy> Posted by: </SinglePostPostedBy>
                   <PostCardUserImg
                     src={`
 https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
         `}
                   />
-                  <p
-                    style={{
-                      color: "#fff",
-                    }}
-                  >
-                    {userPost.username}
-                  </p>
+                  <SinglePostUsername>{userPost.username}</SinglePostUsername>
                 </PostCardUserInfo>
               </PostCardWrapper>
             </PostCardUserContainer>
@@ -142,8 +145,10 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
               >
                 &#128169;{dislike > 0 ? dislike : null}
               </PostCardButtonsDislike>
-            </PostCardBtnContainer>
 
+              {/* comments */}
+              <SinglePostCommentBtn>&#128172; </SinglePostCommentBtn>
+            </PostCardBtnContainer>
             {user.user._id === postData.userId ? (
               <PostCardButtonDelete onClick={() => deletePost(id)}>
                 &#10060;
@@ -159,6 +164,10 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
             />
           ) : null}
         </PostCardContainer>
+      )}
+      {/* displaying comment */}
+      {postData.comments === undefined ? null : (
+        <Comments comments={postData.comments} />
       )}
     </>
   );

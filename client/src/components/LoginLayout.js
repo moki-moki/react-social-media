@@ -21,22 +21,13 @@ const LoginLayout = () => {
   return (
     <div>
       <FormControl onSubmit={handleLogin}>
-        <Input
-          className="input"
-          placeholder="Email"
-          type="email"
-          required
-          className="loginInput"
-          ref={email}
-        />
+        <Input placeholder="Email" type="email" required ref={email} />
 
         <Input
-          className="input"
           placeholder="Password"
           type="password"
           required
           minLength="6"
-          className="loginInput"
           ref={password}
         />
         <FormButton type="submit">LOGIN</FormButton>
