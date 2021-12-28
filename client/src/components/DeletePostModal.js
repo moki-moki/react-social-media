@@ -4,7 +4,7 @@ import {
   DeleteModalMainContainer,
 } from "./styles/DeleteModalStyles/DeleteModalStyles";
 import { PostCardButtonDelete } from "./styles/PostCardStyles";
-import { deletePostHelper, deleteCommentHelper } from "./utils/apiHelpers";
+import { deletePostHelper } from "./utils/apiHelpers";
 
 const DeletePostModal = ({ id, setOpenModal, openModal, postId }) => {
   const deletePost = async (id) => {

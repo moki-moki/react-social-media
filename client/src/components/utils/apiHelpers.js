@@ -91,3 +91,23 @@ export const deleteCommentHelper = async (id, postId) => {
     console.log(error);
   }
 };
+
+export const postComment = async (postId, text, userId) => {
+  try {
+    const req = await fetch(`/posts/comment/${postId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        text,
+        userId,
+      }),
+    });
+    const res = await req.json();
+    console.log(res);
+    window.location.reload();
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -13,7 +13,7 @@ import {
 
 const Navbar = ({ user }) => {
   const [menu, setMenu] = useState(false);
-
+  console.log(user);
   const navRef = useRef();
 
   useEffect(() => {
@@ -66,7 +66,6 @@ const Navbar = ({ user }) => {
           </NavDropdownCotnainer>
         ) : null}
       </NavUserContainer>
-      {/* </Link> */}
     </NavbarContainer>
   );
 };

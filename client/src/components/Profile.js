@@ -16,9 +16,7 @@ const Profile = () => {
     fetchPostData(id).then((data) => setInfo(data));
   }, [id, username]);
 
-  // get user info
-  // useEffect(() => {
-  // }, []);
+  console.log(posts);
 
   return (
     <>

@@ -8,7 +8,6 @@ import {
   PostCardButtonDelete,
   PostCardContainer,
   PostCardContentContainer,
-  PostCardProfileLink,
   PostCardUserContainer,
   PostCardUserImg,
   PostCardUserInfo,
@@ -27,7 +26,7 @@ const Comment = ({ comment }) => {
 
   useEffect(() => {
     fetchPostData(user).then((data) => setUserData(data));
-  }, [comment]);
+  }, [user]);
 
   // deletes a post duuh...
   const deletePost = () => {
@@ -40,17 +39,15 @@ const Comment = ({ comment }) => {
         <PostCardContentContainer>
           <PostCardUserContainer>
             <PostCardWrapper>
-              <PostCardUserInfo>
-                <PostCardProfileLink
-                  to={`/profile/${userData.username}/${userData._id}`}
-                >
-                  <PostCardUserImg
-                    src={`
+              <PostCardUserInfo
+                to={`/profile/${userData.username}/${userData._id}`}
+              >
+                <PostCardUserImg
+                  src={`
 https://avatars.dicebear.com/api/identicon/${userData.username}.svg
         `}
-                  />
-                  <p style={{ color: "#fff" }}>{userData.username}</p>
-                </PostCardProfileLink>
+                />
+                <p style={{ color: "#fff" }}>{userData.username}</p>
               </PostCardUserInfo>
               <div>
                 <p>

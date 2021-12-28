@@ -24,6 +24,7 @@ import {
   SinglePostPostedBy,
   SinglePostUsername,
 } from "./styles/SinglePostStyles";
+import CommentInput from "./CommentInput";
 
 const SinglePost = () => {
   const { id } = useParams();
@@ -35,7 +36,10 @@ const SinglePost = () => {
   const [dislike, setDislike] = useState(0);
   const [isDislike, setIsDislike] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  // delete
   const [openModal, setOpenModal] = useState(false);
+  // comment input
+  const [showInput, setShowInput] = useState(false);
 
   const myInit = {
     method: "PUT",
@@ -45,6 +49,11 @@ const SinglePost = () => {
     body: JSON.stringify({
       userId: user.user._id,
     }),
+  };
+
+  // show input
+  const handleShowInput = () => {
+    setShowInput(!showInput);
   };
 
   // like func
@@ -109,7 +118,7 @@ const SinglePost = () => {
               {postData["img"] ? (
                 <img
                   style={{ margin: "1em 0", width: "100%" }}
-                  src={"http://localhost:5001/images/" + postData.img}
+                  src={"http://localhost:5000/images/" + postData.img}
                   alt="alt"
                 />
               ) : null}
@@ -145,9 +154,13 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
               >
                 &#128169;{dislike > 0 ? dislike : null}
               </PostCardButtonsDislike>
-
               {/* comments */}
-              <SinglePostCommentBtn>&#128172; </SinglePostCommentBtn>
+              <SinglePostCommentBtn
+                disabled={showInput === true}
+                onClick={() => handleShowInput()}
+              >
+                &#128172;
+              </SinglePostCommentBtn>
             </PostCardBtnContainer>
             {user.user._id === postData.userId ? (
               <PostCardButtonDelete onClick={() => deletePost(id)}>
@@ -155,6 +168,16 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
               </PostCardButtonDelete>
             ) : null}
           </PostCardBottomBar>
+          {/* Comment input */}
+          {showInput ? (
+            <CommentInput
+              userId={user.user._id}
+              postId={id}
+              setShowInput={setShowInput}
+              showInput={showInput}
+            />
+          ) : null}
+
           {/* DELETE */}
           {openModal ? (
             <DeletePostModal

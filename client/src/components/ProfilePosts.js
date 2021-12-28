@@ -4,7 +4,7 @@ const ProfilePosts = ({ posts }) => {
   return (
     <div>
       {posts.map((post) => (
-        <Post post={post} />
+        <Post key={post._id} post={post} />
       ))}
     </div>
   );

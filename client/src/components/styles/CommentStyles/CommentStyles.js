@@ -7,6 +7,7 @@ export const PostCardDesc = styled.p`
   width: 100%;
   display: inline-block;
   border-radius: 10px;
+  word-break: break-word;
   cursor: default;
   &:hover {
     color: ${({ theme }) => theme.colors.heading};

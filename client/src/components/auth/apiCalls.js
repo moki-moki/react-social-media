@@ -17,6 +17,6 @@ export const loginCall = async (userCredential, dispatch) => {
     const data = await res.json();
     dispatch({ type: "LOGIN_SUCCESS", payload: data });
   } catch (error) {
-    dispatch({ type: "LOGIN_FAIL" });
+    dispatch({ type: "LOGIN_FAIL", payload: error });
   }
 };

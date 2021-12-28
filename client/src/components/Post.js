@@ -6,7 +6,6 @@ import {
   PostCardButtonDelete,
   PostCardButtonsDislike,
   PostCardButtonsLike,
-  PostCardCommentContainer,
   PostCardContainer,
   PostCardContentContainer,
   PostCardDesc,
@@ -76,14 +75,15 @@ const Post = ({ post }) => {
       <PostCardContentContainer>
         <PostCardUserContainer>
           <PostCardWrapper>
-            <PostCardUserInfo>
-              <Link to={`/profile/${userPost.username}/${userPost._id}`}>
-                <PostCardUserImg
-                  src={`
+            <PostCardUserInfo
+              to={`/profile/${userPost.username}/${userPost._id}`}
+            >
+              <PostCardUserImg
+                src={`
 https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
         `}
-                />
-              </Link>
+              />
+
               <p style={{ color: "#fff" }}>{userPost.username}</p>
             </PostCardUserInfo>
             <div>
@@ -121,7 +121,6 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
               >
                 &#128169;{dislike > 0 ? dislike : null}
               </PostCardButtonsDislike>
-
               {/* comments */}
               <SinglePostCommentBtn>
                 <Link to={`/posts/${post._id}`}>

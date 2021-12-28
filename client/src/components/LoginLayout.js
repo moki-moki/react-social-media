@@ -12,15 +12,21 @@ const LoginLayout = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    await loginCall(
-      { email: email.current.value, password: password.current.value },
-      dispatch
-    );
+    try {
+      await loginCall(
+        { email: email.current.value, password: password.current.value },
+        dispatch
+      );
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  console.log(error);
 
   return (
     <div>
-      <FormControl onSubmit={handleLogin}>
+      <FormControl onSubmit={(e) => handleLogin(e)}>
         <Input placeholder="Email" type="email" required ref={email} />
 
         <Input
