@@ -24,8 +24,6 @@ const HomepageLayout = () => {
     });
   };
 
-  console.log(data);
-
   return (
     <div>
       {data.length === 0 ? (

@@ -16,8 +16,6 @@ const Profile = () => {
     fetchPostData(id).then((data) => setInfo(data));
   }, [id, username]);
 
-  console.log(posts);
-
   return (
     <>
       {posts.length === 0 && name === undefined ? (

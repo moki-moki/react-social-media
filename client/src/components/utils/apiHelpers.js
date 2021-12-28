@@ -28,7 +28,6 @@ export const deletePostHelper = async (id) => {
     await fetch(`/posts/${id}`, {
       method: "DELETE",
     });
-    window.location.reload();
   } catch (error) {
     console.log(error);
   }
@@ -36,7 +35,6 @@ export const deletePostHelper = async (id) => {
 
 export const fetchPostData = async (userId) => {
   const req = await fetch(`/user?userId=${userId}`);
-  console.log(req);
   return await req.json();
 };
 
@@ -54,7 +52,7 @@ export const uploadPost = async (data) => {
 
 export const createPost = async (desc, img, id) => {
   try {
-    const req = await fetch("/posts/create", {
+    await fetch("/posts/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,8 +63,6 @@ export const createPost = async (desc, img, id) => {
         userId: id,
       }),
     });
-    const res = req.json();
-    console.log(res);
   } catch (error) {
     console.log(error);
   }
@@ -94,7 +90,7 @@ export const deleteCommentHelper = async (id, postId) => {
 
 export const postComment = async (postId, text, userId) => {
   try {
-    const req = await fetch(`/posts/comment/${postId}`, {
+    await fetch(`/posts/comment/${postId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -104,8 +100,7 @@ export const postComment = async (postId, text, userId) => {
         userId,
       }),
     });
-    const res = await req.json();
-    console.log(res);
+
     window.location.reload();
   } catch (error) {
     console.log(error);

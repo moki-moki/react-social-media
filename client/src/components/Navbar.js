@@ -13,7 +13,6 @@ import {
 
 const Navbar = ({ user }) => {
   const [menu, setMenu] = useState(false);
-  console.log(user);
   const navRef = useRef();
 
   useEffect(() => {

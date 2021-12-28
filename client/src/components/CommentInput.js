@@ -11,7 +11,6 @@ const CommentInput = ({ setShowInput, showInput, postId, userId }) => {
 
   useEffect(() => {
     let closeInput = (e) => {
-      console.log(e.target);
       if (!inputRef.current.contains(e.target)) {
         setShowInput(!showInput);
       }
@@ -29,7 +28,6 @@ const CommentInput = ({ setShowInput, showInput, postId, userId }) => {
     postComment(postId, inputText, userId);
   };
 
-  console.log(inputText);
   return (
     <div ref={inputRef}>
       <CommentInputContainer onSubmit={(e) => handleSubmit(e)}>

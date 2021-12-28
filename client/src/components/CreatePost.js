@@ -36,7 +36,6 @@ const CreatePost = () => {
       const fileNameStored = Date.now() + fileName.name;
       data.append("name", fileNameStored);
       data.append("file", fileName);
-      console.log(fileNameStored);
       newPost.img = fileNameStored;
 
       try {
@@ -58,7 +57,6 @@ const CreatePost = () => {
           history.push("/");
         }, 3000);
       } else {
-        console.log(newPost);
         return;
       }
     } catch (error) {

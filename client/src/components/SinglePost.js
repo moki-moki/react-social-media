@@ -78,7 +78,6 @@ const SinglePost = () => {
       setPostData(data);
       setLike(data.likes.length);
       setDislike(data.dislikes.length);
-      console.log(data);
     };
     getData();
   }, [id]);
@@ -108,7 +107,7 @@ const SinglePost = () => {
 
   return (
     <>
-      {postData === undefined ? (
+      {postData === undefined && postData === null ? (
         <Loader />
       ) : (
         <PostCardContainer>

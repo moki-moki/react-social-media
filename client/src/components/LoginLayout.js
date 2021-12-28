@@ -22,8 +22,6 @@ const LoginLayout = () => {
     }
   };
 
-  console.log(error);
-
   return (
     <div>
       <FormControl onSubmit={(e) => handleLogin(e)}>
