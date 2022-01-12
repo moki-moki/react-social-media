@@ -8,7 +8,7 @@ import { FormButton, FormControl, Input, SpanForm } from "./styles/FormStyles";
 const LoginLayout = () => {
   const password = useRef();
   const email = useRef();
-  const { user, error, dispatch } = useContext(AuthContext);
+  const { error, dispatch } = useContext(AuthContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -40,7 +40,6 @@ const LoginLayout = () => {
         </SpanForm>
       </FormControl>
       {error ? <NotificationFail /> : null}
-      {user === undefined ? <NotificationFail /> : null}
     </div>
   );
 };

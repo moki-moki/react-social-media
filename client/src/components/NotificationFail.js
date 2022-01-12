@@ -5,7 +5,7 @@ const NotificationFail = () => {
   return (
     <NotificationFailContainer>
       <NotificationSuccessText>
-        Oops... Something went wrong.
+        Oops... Wrong Credentials
       </NotificationSuccessText>
     </NotificationFailContainer>
   );

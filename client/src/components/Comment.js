@@ -24,6 +24,7 @@ const Comment = ({ comment }) => {
   const { id } = useParams();
   const { user, text, _id, date } = comment;
 
+
   useEffect(() => {
     fetchPostData(user).then((data) => setUserData(data));
   }, [user]);

@@ -1,5 +1,5 @@
 export const loginCall = async (userCredential, dispatch) => {
-  dispatch({ type: "LOGIN" });
+  dispatch({ type: "LOGIN_START" });
 
   const myInit = {
     method: "POST",

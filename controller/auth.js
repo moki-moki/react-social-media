@@ -31,13 +31,13 @@ exports.login = async (req, res, next) => {
     const user = await User.findOne({ email }).select("+password");
 
     if (!user) {
-      return next(new ErrorResponse("Invalid Credentials"), 401);
+      return res.status(401).json();
     }
     // method that finds password and compares is
     const match = await user.matchPasswords(password);
 
     if (!match) {
-      return next(new ErrorResponse("Invalid Cuedentials"), 401);
+      return res.status(401).json();
     }
 
     // res.status(200).json(user);

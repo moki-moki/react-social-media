@@ -24,7 +24,8 @@ import Profile from "./components/Profile";
 
 import theme from "./components/styles/theme";
 function App() {
-  const { user } = useContext(AuthContext);
+  const { user, error } = useContext(AuthContext);
+  console.log(error);
 
   return (
     <Router>
