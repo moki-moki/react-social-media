@@ -4,8 +4,6 @@ import {
   PostCardBottomBar,
   PostCardBtnContainer,
   PostCardButtonDelete,
-  PostCardButtonsDislike,
-  PostCardButtonsLike,
   PostCardContainer,
   PostCardContentContainer,
   PostCardDesc,
@@ -15,55 +13,23 @@ import {
   PostCardUserInfo,
   PostCardWrapper,
 } from "./styles/PostCardStyles";
+import { SinglePostCommentBtn } from "./styles/SinglePostStyles";
 import { Link } from "react-router-dom";
 import DeletePostModal from "./DeletePostModal";
 import moment from "moment";
-import { likeHelper, dislikeHelper, fetchPostData } from "./utils/apiHelpers";
-import { SinglePostCommentBtn } from "./styles/SinglePostStyles";
+import { fetchPostData } from "./utils/apiHelpers";
+import LikeDislike from "./LikeDislike";
 
 const Post = ({ post }) => {
-  const [like, setLike] = useState(post.likes.length);
-  const [dislike, setDislike] = useState(post.dislikes.length);
-  const [isDislike, setIsDislike] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
   const [userPost, setUserPost] = useState({});
   const [openModal, setOpenModal] = useState(false);
 
   const { user } = useContext(AuthContext);
 
-  const myInit = {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      userId: user.user._id,
-    }),
-  };
-
   // fetching post data
   useEffect(() => {
     fetchPostData(post.userId).then((data) => setUserPost(data));
   }, [post.userId]);
-
-  useEffect(() => {
-    setIsLiked(post.likes.includes(user.user._id));
-    setIsDislike(post.dislikes.includes(user.user._id));
-  }, [user.user._id, post.likes, post.dislikes]);
-
-  // like func
-  const likeHandle = async () => {
-    likeHelper(post._id, myInit);
-    setLike(isLiked ? like - 1 : like + 1);
-    setIsLiked(!isLiked);
-  };
-
-  // dislike func
-  const dislikeHandle = async () => {
-    dislikeHelper(post._id, myInit);
-    setDislike(isDislike ? dislike - 1 : dislike + 1);
-    setIsDislike(!isDislike);
-  };
 
   // deleting post
   const deletePost = async () => {
@@ -107,20 +73,12 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
           />
           <PostCardBottomBar>
             <PostCardBtnContainer>
-              <PostCardButtonsLike
-                style={{ backgroundColor: isLiked ? "#09c372" : "transparent" }}
-                onClick={likeHandle}
-              >
-                &#128077; {like > 0 ? like : null}
-              </PostCardButtonsLike>
-              <PostCardButtonsDislike
-                style={{
-                  backgroundColor: isDislike ? "#ff3860" : "transparent",
-                }}
-                onClick={dislikeHandle}
-              >
-                &#128169;{dislike > 0 ? dislike : null}
-              </PostCardButtonsDislike>
+              <LikeDislike
+                id={post._id}
+                likeArr={post.likes}
+                dislikeArr={post.dislikes}
+                postUserId={post.userId}
+              />
               {/* comments */}
               <SinglePostCommentBtn>
                 <Link to={`/posts/${post._id}`}>
