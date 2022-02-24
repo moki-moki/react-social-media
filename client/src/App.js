@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { AuthContext } from "./components/context/AuthContext";
 
@@ -22,17 +22,23 @@ import CreatePost from "./components/CreatePost";
 import SinglePost from "./components/SinglePost";
 import Profile from "./components/Profile";
 
+// import theme from "./components/styles/theme";
 import theme from "./components/styles/theme";
+
 function App() {
   const { user, error } = useContext(AuthContext);
-  console.log(error);
+  const [themes, setThemes] = useState(
+    JSON.parse(localStorage.getItem("theme")) || "dark"
+  );
 
   return (
     <Router>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme[themes]}>
         <GlobalStyles />
 
-        {user ? <Navbar user={user.user} /> : null}
+        {user ? (
+          <Navbar themes={themes} setThemes={setThemes} user={user.user} />
+        ) : null}
         <Switch>
           <Route exact path="/">
             {user ? <HomepageLayout /> : <LoginLayout />}

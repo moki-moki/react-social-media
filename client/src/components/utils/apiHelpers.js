@@ -35,6 +35,7 @@ export const deletePostHelper = async (id) => {
 
 export const fetchPostData = async (userId) => {
   const req = await fetch(`/user?userId=${userId}`);
+  console.log(req.json);
   return await req.json();
 };
 

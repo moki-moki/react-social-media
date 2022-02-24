@@ -11,7 +11,6 @@ export const SinglePostCommentBtn = styled.button`
   color: ${({ theme }) => theme.colors.text};
 
   &:hover {
-    background: ${({ theme }) => theme.colors.text};
     border-radius: 10px;
   }
 `;

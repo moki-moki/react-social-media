@@ -1,24 +1,71 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
+  HamburgerContainer,
   NavbarContainer,
   NavbarDropdownLink,
   NavbarDropdownSignOut,
   NavDropdownCotnainer,
+  NavItemWrapper,
   NavLeftSide,
   NavUserContainer,
   NavUserImg,
   NavUsername,
+  ToggleBtn,
+  ToggleContainer,
+  ToggleItemWrapper,
 } from "./styles/NavbarStyles";
 
-const Navbar = ({ user }) => {
+const Navbar = ({ user, setThemes, themes }) => {
+  // toggle profile menu
   const [menu, setMenu] = useState(false);
-  const navRef = useRef();
+
+  // toggle themes
+  const [toggle, setToggle] = useState(false);
+
+  // toggle hamburger
+  const [toggleHamburger, setToggleHamburger] = useState(false);
+  const hamburgerRef = useRef(null);
+
+  useEffect(() => {
+    const closeHamburgerMenu = (e) => {
+      if (
+        hamburgerRef.current &&
+        !hamburgerRef.current.contains(e.target) &&
+        e.target.tagName !== "A"
+      ) {
+        setToggleHamburger(false);
+      }
+    };
+
+    document.addEventListener("mousedown", closeHamburgerMenu);
+
+    return () => {
+      document.removeEventListener("mousedown", closeHamburgerMenu);
+    };
+  }, [hamburgerRef]);
+
+  const toggleHamburgerMenu = () => {
+    setToggleHamburger(!toggleHamburger);
+  };
+
+  const navRef = useRef(null);
+
+  const changeTheme = () => {
+    if (themes === "light") {
+      setThemes("dark");
+      localStorage.setItem("theme", JSON.stringify("dark"));
+    } else {
+      setThemes("light");
+      localStorage.setItem("theme", JSON.stringify("light"));
+    }
+    setToggle(!toggle);
+  };
 
   useEffect(() => {
     let closeNavDropdown = (e) => {
       if (navRef.current && !navRef.current.contains(e.target)) {
-        setMenu(!menu);
+        setMenu(false);
       }
     };
 
@@ -40,15 +87,15 @@ const Navbar = ({ user }) => {
 
   return (
     <NavbarContainer>
-      <NavLeftSide>
-        <Link to="/">
-          <h4>LOGO</h4>
-        </Link>
-        <Link style={{ margin: "0 1em" }} to="/about">
-          About
-        </Link>
-        <Link to="/createPost">Create a post</Link>
-      </NavLeftSide>
+      <HamburgerContainer
+        onClick={toggleHamburgerMenu}
+        hamburgerToggle={toggleHamburger}
+        ref={hamburgerRef}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </HamburgerContainer>
       <NavUserContainer onClick={() => handleDropdownMenu()}>
         <NavUsername>{user.username}</NavUsername>
         <NavUserImg
@@ -65,6 +112,22 @@ const Navbar = ({ user }) => {
           </NavDropdownCotnainer>
         ) : null}
       </NavUserContainer>
+      <NavItemWrapper hamburgerToggle={toggleHamburger}>
+        <NavLeftSide>
+          <Link to="/">Home</Link>
+          <Link style={{ margin: "0 1em" }} to="/about">
+            About
+          </Link>
+          <Link to="/createPost">Create a post</Link>
+        </NavLeftSide>
+      </NavItemWrapper>
+      <ToggleContainer>
+        <ToggleItemWrapper>
+          <span>&#127774;</span>
+          <span>&#127771;</span>
+          <ToggleBtn toggle={toggle} onClick={changeTheme}></ToggleBtn>
+        </ToggleItemWrapper>
+      </ToggleContainer>
     </NavbarContainer>
   );
 };

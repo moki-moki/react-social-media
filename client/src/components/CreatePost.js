@@ -69,7 +69,7 @@ const CreatePost = () => {
     <ShareContainer>
       <ShareForm onSubmit={submitHandler}>
         <FormInput
-          placeholder={"Whats on your mind " + user.user.username + "?"}
+          placeholder={"Whats on your mind " + user.username + "?"}
           ref={desc}
         />
         <span style={{ marginTop: "1em " }}>Share Photo or a Video</span>

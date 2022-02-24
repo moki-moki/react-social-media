@@ -10,7 +10,7 @@ const GlobalStyles = createGlobalStyle`
 }
 body {
     background: ${({ theme }) => theme.colors.body};
-    font-family: ${({ theme }) => theme.fonts.defaultFont};
+    font-family: ${({ theme }) => theme.fonts};
     line-height: 1.5;
     position: relative;
     min-height: 100vh;

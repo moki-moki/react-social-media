@@ -14,7 +14,10 @@ export const DeleteModalMainContainer = styled.div`
 `;
 
 export const DeleteModalContainer = styled.div`
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   height: 60vh;
   width: 70%;
   margin: 0 auto;

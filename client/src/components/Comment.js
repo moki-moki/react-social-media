@@ -8,6 +8,7 @@ import {
   PostCardButtonDelete,
   PostCardContainer,
   PostCardContentContainer,
+  PostCardHeader,
   PostCardUserContainer,
   PostCardUserImg,
   PostCardUserInfo,
@@ -23,7 +24,6 @@ const Comment = ({ comment }) => {
   const { user: username } = useContext(AuthContext);
   const { id } = useParams();
   const { user, text, _id, date } = comment;
-
 
   useEffect(() => {
     fetchPostData(user).then((data) => setUserData(data));
@@ -48,14 +48,14 @@ const Comment = ({ comment }) => {
 https://avatars.dicebear.com/api/identicon/${userData.username}.svg
         `}
                 />
-                <p style={{ color: "#fff" }}>{userData.username}</p>
+                <PostCardHeader>{userData.username}</PostCardHeader>
               </PostCardUserInfo>
               <div>
                 <p>
                   Posted At:
-                  <span style={{ color: "#fff", margin: "0 0.3em" }}>
+                  <PostCardHeader>
                     {moment(date).format("DD MMM  HH:mm")}
-                  </span>
+                  </PostCardHeader>
                 </p>
               </div>
             </PostCardWrapper>

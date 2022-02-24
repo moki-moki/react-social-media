@@ -31,6 +31,7 @@ export const PostCardWrapper = styled.div`
   width: 100%;
   margin: 1em 0;
   padding: 0 1em;
+  transition: 0.2s ease background;
 `;
 
 export const PostCardUserInfo = styled(Link)`
@@ -42,7 +43,7 @@ export const PostCardUserInfo = styled(Link)`
   cursor: pointer;
   &:hover {
     color: ${({ theme }) => theme.colors.heading};
-    background: rgba(255, 255, 255, 0.1);
+    background: ${({ theme }) => theme.colors.hoverOverlay};
   }
 `;
 
@@ -157,13 +158,18 @@ export const PostCardLink = styled(Link)`
   border-radius: 10px;
   &:hover {
     color: ${({ theme }) => theme.colors.heading};
-    background: rgba(255, 255, 255, 0.1);
+    background: ${({ theme }) => theme.colors.hoverOverlay};
   }
 `;
 
 export const PostCardDescContainer = styled.p`
   &:hover {
-    background: ${({ theme }) => theme.colors.text};
+    background: ${({ theme }) => theme.colors.hoverOverlay};
     transition: 0.2s ease background;
   }
+`;
+
+export const PostCardHeader = styled.span`
+  color: ${({ theme }) => theme.colors.heading};
+  margin: 0 0.3em;
 `;

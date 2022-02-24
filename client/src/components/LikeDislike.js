@@ -20,14 +20,14 @@ const LikeDislike = ({ likeArr, dislikeArr, id }) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      userId: user.user._id,
+      userId: user._id,
     }),
   };
 
   useEffect(() => {
-    setIsLiked(likeArr.includes(user.user._id));
-    setIsDislike(dislikeArr.includes(user.user._id));
-  }, [user.user._id, likeArr, dislikeArr]);
+    setIsLiked(likeArr.includes(user._id));
+    setIsDislike(dislikeArr.includes(user._id));
+  }, [user._id, likeArr, dislikeArr]);
 
   // like func
   const likeHandle = async () => {

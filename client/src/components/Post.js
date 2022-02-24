@@ -7,6 +7,7 @@ import {
   PostCardContainer,
   PostCardContentContainer,
   PostCardDesc,
+  PostCardHeader,
   PostCardLink,
   PostCardUserContainer,
   PostCardUserImg,
@@ -50,14 +51,14 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
         `}
               />
 
-              <p style={{ color: "#fff" }}>{userPost.username}</p>
+              <PostCardHeader>{userPost.username}</PostCardHeader>
             </PostCardUserInfo>
             <div>
               <p>
                 Posted At:
-                <span style={{ color: "#fff", margin: "0 0.3em" }}>
+                <PostCardHeader>
                   {moment(post.createdAt).format("DD MMM  HH:mm")}
-                </span>
+                </PostCardHeader>
               </p>
             </div>
           </PostCardWrapper>

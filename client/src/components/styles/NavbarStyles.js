@@ -14,7 +14,10 @@ export const NavbarContainer = styled.div`
 
 export const NavLeftSide = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
+  height: 100%;
+  margin-top: 5em;
 `;
 
 export const Logo = styled.img``;
@@ -49,6 +52,7 @@ export const NavDropdownCotnainer = styled.div`
   background: ${({ theme }) => theme.colors.cardBg};
   border: 1px solid ${({ theme }) => theme.colors.text};
   border-radius: 10px;
+  z-index: 10;
 `;
 
 export const NavbarDropdownLink = styled(Link)`
@@ -67,5 +71,87 @@ export const NavbarDropdownSignOut = styled.span`
 
   &:hover {
     color: ${({ theme }) => theme.colors.greenBtn};
+  }
+`;
+
+export const ToggleContainer = styled.div`
+  width: 70px;
+  height: 30px;
+  border-radius: 15px;
+  border: 2px solid ${({ theme }) => theme.colors.heading};
+  padding: 0.3em;
+`;
+
+export const ToggleItemWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const ToggleBtn = styled.span`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: ${({ theme }) => theme.colors.heading};
+  position: absolute;
+  left: ${({ toggle }) => (toggle ? "100%" : "0%")};
+  transform: ${({ toggle }) =>
+    toggle ? "translateX(-100%)" : " translateX(0%)"};
+  z-index: 3;
+  transition: 0.3s ease all;
+`;
+
+export const NavItemWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 30%;
+  display: flex;
+  align-items: center;
+  flex-direction: column-reverse;
+  background: ${({ theme }) => theme.colors.cardBg};
+  transition: 0.3s ease all;
+  transform: ${({ hamburgerToggle }) =>
+    hamburgerToggle ? "translateX(0%)" : "translateX(-100%)"};
+`;
+
+export const HamburgerContainer = styled.div`
+  width: 33px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  transition: 0.3s ease all;
+  z-index: 3;
+
+  & span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: ${({ theme }) => theme.colors.heading};
+    transition: 0.3s ease all;
+    position: ${({ hamburgerToggle }) =>
+      hamburgerToggle ? "absolute" : "static"};
+  }
+
+  & span:nth-child(1) {
+    transform: ${({ hamburgerToggle }) =>
+      hamburgerToggle ? "rotate(45deg)" : "rotate(0deg)"};
+  }
+
+  & span:nth-child(3) {
+    transform: ${({ hamburgerToggle }) =>
+      hamburgerToggle ? "rotate(-45deg)" : "rotate(0deg)"};
+  }
+
+  & span:nth-child(2) {
+    opacity: ${({ hamburgerToggle }) => (hamburgerToggle ? "0" : "1")};
+    display: ${({ hamburgerToggle }) => (hamburgerToggle ? "none" : "block")};
   }
 `;
