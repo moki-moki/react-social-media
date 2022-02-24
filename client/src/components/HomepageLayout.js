@@ -1,11 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import Post from "./Post";
 import { BtnArrowUp } from "./styles/BackToTopBtnStyles";
 import Loader from "./Loader";
 import { getPosts } from "./utils/apiHelpers";
+import { AuthContext } from "./context/AuthContext";
+import { MainHomeContainer } from "./styles/HomepageStyles";
 
 const HomepageLayout = () => {
   const [data, setData] = useState([]);
+
+  const { user } = useContext(AuthContext);
+  const history = useHistory();
 
   useEffect(() => {
     getPosts().then((data) =>
@@ -15,7 +21,11 @@ const HomepageLayout = () => {
         })
       )
     );
-  }, []);
+
+    if (!user) {
+      history.push("/login");
+    }
+  }, [user]);
 
   const handleToTop = () => {
     window.scrollTo({
@@ -25,7 +35,7 @@ const HomepageLayout = () => {
   };
 
   return (
-    <div>
+    <MainHomeContainer>
       {data.length === 0 ? (
         <Loader />
       ) : (
@@ -36,7 +46,7 @@ const HomepageLayout = () => {
         </>
       )}
       <BtnArrowUp onClick={handleToTop}>^</BtnArrowUp>
-    </div>
+    </MainHomeContainer>
   );
 };
 

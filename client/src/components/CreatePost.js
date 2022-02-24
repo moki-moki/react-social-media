@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 import NotificationFail from "./NotificationFail";
@@ -11,6 +11,7 @@ import {
   FormPlustBorder,
   ShareContainer,
   ShareForm,
+  UploadImageContainer,
 } from "./styles/CreatePostStyles";
 import { createPost, uploadPost } from "./utils/apiHelpers";
 
@@ -22,6 +23,12 @@ const CreatePost = () => {
   const desc = useRef();
 
   const history = useHistory();
+
+  useEffect(() => {
+    if (!user) {
+      history.push("/login");
+    }
+  }, [user]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -86,13 +93,15 @@ const CreatePost = () => {
             onChange={(e) => setFileName(e.target.files[0])}
           />
         </label>
-        {fileName && (
-          <img
-            style={{ margin: "1em 0", maxWidth: "100%", maxHeight: "1000px" }}
-            src={URL.createObjectURL(fileName)}
-            alt="img"
-          />
-        )}
+        <UploadImageContainer>
+          {fileName && (
+            <img
+              style={{ margin: "1em 0", maxWidth: "100%", height: "90%" }}
+              src={URL.createObjectURL(fileName)}
+              alt="img"
+            />
+          )}
+        </UploadImageContainer>
         <FormBtnSubmit style={{ marginTop: "1em" }} type="submit">
           Share
         </FormBtnSubmit>

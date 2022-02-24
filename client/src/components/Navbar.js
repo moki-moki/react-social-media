@@ -87,47 +87,58 @@ const Navbar = ({ user, setThemes, themes }) => {
 
   return (
     <NavbarContainer>
-      <HamburgerContainer
-        onClick={toggleHamburgerMenu}
-        hamburgerToggle={toggleHamburger}
-        ref={hamburgerRef}
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </HamburgerContainer>
-      <NavUserContainer onClick={() => handleDropdownMenu()}>
-        <NavUsername>{user.username}</NavUsername>
-        <NavUserImg
-          src={`https://avatars.dicebear.com/api/identicon/${user.username}.svg`}
-        />
-        {menu ? (
-          <NavDropdownCotnainer ref={navRef}>
-            <NavbarDropdownLink to={`/profile/${user.username}/${user._id}`}>
-              Profile
-            </NavbarDropdownLink>
-            <NavbarDropdownSignOut onClick={() => signOutHandler()}>
-              Sign Out
-            </NavbarDropdownSignOut>
-          </NavDropdownCotnainer>
-        ) : null}
-      </NavUserContainer>
-      <NavItemWrapper hamburgerToggle={toggleHamburger}>
-        <NavLeftSide>
-          <Link to="/">Home</Link>
-          <Link style={{ margin: "0 1em" }} to="/about">
-            About
-          </Link>
-          <Link to="/createPost">Create a post</Link>
-        </NavLeftSide>
-      </NavItemWrapper>
-      <ToggleContainer>
-        <ToggleItemWrapper>
-          <span>&#127774;</span>
-          <span>&#127771;</span>
-          <ToggleBtn toggle={toggle} onClick={changeTheme}></ToggleBtn>
-        </ToggleItemWrapper>
-      </ToggleContainer>
+      {user ? (
+        <>
+          <HamburgerContainer
+            onClick={toggleHamburgerMenu}
+            hamburgerToggle={toggleHamburger}
+            ref={hamburgerRef}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </HamburgerContainer>
+          <NavUserContainer onClick={() => handleDropdownMenu()}>
+            <NavUsername>{user.user.username}</NavUsername>
+            <NavUserImg
+              src={`https://avatars.dicebear.com/api/identicon/${user.user.username}.svg`}
+            />
+            {menu ? (
+              <NavDropdownCotnainer ref={navRef}>
+                <NavbarDropdownLink
+                  to={`/profile/${user.user.username}/${user.user._id}`}
+                >
+                  Profile
+                </NavbarDropdownLink>
+                <NavbarDropdownSignOut onClick={() => signOutHandler()}>
+                  Sign Out
+                </NavbarDropdownSignOut>
+              </NavDropdownCotnainer>
+            ) : null}
+          </NavUserContainer>
+          <NavItemWrapper hamburgerToggle={toggleHamburger}>
+            <NavLeftSide>
+              <Link to="/">Home</Link>
+              <Link style={{ margin: "0 1em" }} to="/about">
+                About
+              </Link>
+              <Link to="/createPost">Create a post</Link>
+            </NavLeftSide>
+          </NavItemWrapper>
+          <ToggleContainer>
+            <ToggleItemWrapper>
+              <span>&#127774;</span>
+              <span>&#127771;</span>
+              <ToggleBtn toggle={toggle} onClick={changeTheme}></ToggleBtn>
+            </ToggleItemWrapper>
+          </ToggleContainer>
+        </>
+      ) : (
+        <>
+          <Link to="/login">Login</Link>
+          <Link to="/register">Register</Link>
+        </>
+      )}
     </NavbarContainer>
   );
 };

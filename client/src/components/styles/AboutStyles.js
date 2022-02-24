@@ -19,6 +19,14 @@ export const AboutHeading = styled.h1`
 
 export const FaqContainer = styled.div`
   width: 50%;
+
+  @media (max-width: 610px) {
+    width: 80%;
+  }
+
+  @media (max-width: 432px) {
+    width: 100%;
+  }
 `;
 
 export const FaqHeading = styled.h4`

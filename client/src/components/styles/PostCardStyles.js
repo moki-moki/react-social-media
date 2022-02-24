@@ -7,6 +7,14 @@ export const PostCardContainer = styled.div`
   width: 50%;
   height: 100%;
   border-radius: 15px;
+
+  @media (max-width: 910px) {
+    width: 80%;
+  }
+
+  @media (max-width: 590px) {
+    width: 95%;
+  }
 `;
 
 export const PostCardContentContainer = styled.div`

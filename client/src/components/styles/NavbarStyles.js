@@ -17,7 +17,8 @@ export const NavLeftSide = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100%;
-  margin-top: 5em;
+  justify-content: space-evenly;
+  font-size: 1.5em;
 `;
 
 export const Logo = styled.img``;
@@ -117,6 +118,10 @@ export const NavItemWrapper = styled.div`
   transition: 0.3s ease all;
   transform: ${({ hamburgerToggle }) =>
     hamburgerToggle ? "translateX(0%)" : "translateX(-100%)"};
+
+  @media (max-width: 526px) {
+    width: 60%;
+  }
 `;
 
 export const HamburgerContainer = styled.div`

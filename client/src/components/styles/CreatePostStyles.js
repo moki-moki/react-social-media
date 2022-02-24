@@ -30,6 +30,10 @@ export const FormInput = styled.input`
   border: 1px solid ${({ theme }) => theme.colors.text};
   border-radius: 15px;
 
+  @media (max-width: 600px) {
+    width: 80%;
+  }
+
   &:focus {
     outline: none;
   }
@@ -68,4 +72,10 @@ export const FormBtnSubmit = styled.button`
     border-radius: 0;
     cursor: pointer;
   }
+`;
+
+export const UploadImageContainer = styled.div`
+  max-width: 800px;
+  max-height: 800px;
+  text-align: center;
 `;

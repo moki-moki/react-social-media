@@ -1,5 +1,6 @@
 import {
   Close,
+  CloseContainer,
   DeleteModalContainer,
   DeleteModalMainContainer,
 } from "./styles/DeleteModalStyles/DeleteModalStyles";
@@ -25,7 +26,9 @@ const DeletePostModal = ({ id, setOpenModal, openModal }) => {
     <DeleteModalMainContainer>
       <DeleteModalContainer>
         <Close onClick={() => closeModal()}>&#10060;</Close>
-        <h1>Are you sure you want to delete this post?</h1>
+        <h1 style={{ padding: "0.5em" }}>
+          Are you sure you want to delete this post?
+        </h1>
         <PostCardButtonDelete onClick={() => deletePost(id)}>
           Delete &#128169;
         </PostCardButtonDelete>

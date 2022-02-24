@@ -36,28 +36,29 @@ function App() {
       <ThemeProvider theme={theme[themes]}>
         <GlobalStyles />
 
-        {user ? (
-          <Navbar themes={themes} setThemes={setThemes} user={user.user} />
-        ) : null}
+        <Navbar themes={themes} setThemes={setThemes} user={user} />
+
         <Switch>
           <Route exact path="/">
-            {user ? <HomepageLayout /> : <LoginLayout />}
+            <HomepageLayout />
           </Route>
           <Route path="/login">
-            {user ? <Redirect to="/" /> : <LoginLayout />}
+            <LoginLayout />
           </Route>
           <Route path="/register">
-            {user ? <Redirect to="/" /> : <RegisterLayout />}
+            <RegisterLayout />
           </Route>
-          <Route path="/about">{user ? <About /> : <RegisterLayout />}</Route>
+          <Route path="/about">
+            <About />
+          </Route>
           <Route path="/createPost">
-            {user ? <CreatePost /> : <RegisterLayout />}
+            <CreatePost />
           </Route>
           <Route path="/posts/:id">
-            {user ? <SinglePost /> : <RegisterLayout />}
+            <SinglePost />
           </Route>
           <Route path="/profile/:username/:id">
-            {user ? <Profile /> : <RegisterLayout />}
+            <Profile />
           </Route>
         </Switch>
         <Footer />

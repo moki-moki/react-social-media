@@ -1,3 +1,6 @@
+import { useContext, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { AuthContext } from "./context/AuthContext";
 import {
   AboutContactContainer,
   AboutHeading,
@@ -9,6 +12,15 @@ import {
 } from "./styles/AboutStyles";
 
 const About = () => {
+  const { user } = useContext(AuthContext);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!user) {
+      history.push("/login");
+    }
+  }, [user]);
+
   return (
     <AboutMainContainer>
       <AboutHeadingWrapper>

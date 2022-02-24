@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useParams } from "react-router";
 import { AuthContext } from "./context/AuthContext";
 import DeletePostModal from "./DeletePostModal";
@@ -31,7 +32,7 @@ const SinglePost = () => {
   const [userPost, setUserPost] = useState({});
   const [like, setLike] = useState();
   const [dislike, setDislike] = useState();
-
+  const history = useHistory();
   // delete
   const [openModal, setOpenModal] = useState(false);
   // comment input
@@ -61,8 +62,13 @@ const SinglePost = () => {
       const data = await req.json();
       setUserPost(data);
     };
+
+    if (!user) {
+      history.push("/login");
+    }
+
     fetchPostData();
-  }, [postData, id]);
+  }, [postData, id, user]);
 
   // deletes a post duuh...
   const deletePost = () => {

@@ -1,5 +1,5 @@
 import { useContext, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { loginCall } from "./auth/apiCalls";
 import { AuthContext } from "./context/AuthContext";
 import NotificationFail from "./NotificationFail";
@@ -9,6 +9,7 @@ const LoginLayout = () => {
   const password = useRef();
   const email = useRef();
   const { error, dispatch } = useContext(AuthContext);
+  const history = useHistory();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -17,6 +18,7 @@ const LoginLayout = () => {
         { email: email.current.value, password: password.current.value },
         dispatch
       );
+      history.push("/");
     } catch (err) {
       console.log(err);
     }
