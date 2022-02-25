@@ -9,10 +9,15 @@ export const ProfileCardContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   position: relative;
+
+  @media (max-width: 1266px) {
+    width: 70%;
+  }
 `;
 
 export const ProfileInfoContainer = styled.div`
   grid-column: 2/4;
+  position: relative;
 `;
 
 export const ProfilePictureContainer = styled.div`
@@ -23,12 +28,6 @@ export const ProfilePictureWrapper = styled.div`
   position: relative;
   border-radius: 50%;
   width: 50%;
-`;
-
-export const EditBtn = styled.span`
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 export const ProfilePicture = styled.img`
@@ -57,4 +56,23 @@ export const ProfilePictureEditCircle = styled.div`
   &:hover {
     background: ${({ theme }) => theme.colors.editBtn};
   }
+`;
+
+export const EditBtn = styled.div`
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  border: 1px solid ${({ theme }) => theme.colors.orangeBtn};
+  border-radius: 10px;
+  padding: 0.3em;
+  font-size: 1.2em;
+  width: max-content;
+  cursor: pointer;
+  transition: 0.3s ease border-radius;
+
+  &:hover{
+    border-radius: 0;
+  }
+
+}
 `;

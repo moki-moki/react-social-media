@@ -5,6 +5,6 @@ const { getUser } = require("../controller/user");
 router.get("/", getUser);
 
 // Edit profile
-router.put("/edit", editUsersProfile);
+router.patch("/edit/:id", editUsersProfile);
 
 module.exports = router;

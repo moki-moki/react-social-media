@@ -118,11 +118,19 @@ const Navbar = ({ user, setThemes, themes }) => {
           </NavUserContainer>
           <NavItemWrapper hamburgerToggle={toggleHamburger}>
             <NavLeftSide>
-              <Link to="/">Home</Link>
-              <Link style={{ margin: "0 1em" }} to="/about">
+              <Link onClick={() => setToggleHamburger(false)} to="/">
+                Home
+              </Link>
+              <Link
+                style={{ margin: "0 1em" }}
+                to="/about"
+                onClick={() => setToggleHamburger(false)}
+              >
                 About
               </Link>
-              <Link to="/createPost">Create a post</Link>
+              <Link onClick={() => setToggleHamburger(false)} to="/createPost">
+                Create a post
+              </Link>
             </NavLeftSide>
           </NavItemWrapper>
           <ToggleContainer>

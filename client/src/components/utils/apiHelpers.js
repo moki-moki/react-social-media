@@ -107,3 +107,21 @@ export const postComment = async (postId, text, userId) => {
     console.log(error);
   }
 };
+
+export const editProfile = async (name, id) => {
+  try {
+    await fetch(`/user/edit/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: name,
+      }),
+    });
+    localStorage.removeItem("user");
+    window.location.reload();
+  } catch (error) {
+    console.log(error);
+  }
+};
