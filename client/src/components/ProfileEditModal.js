@@ -6,9 +6,8 @@ import {
 } from "./styles/ProfileStyles/ProfileEditModalStyles";
 import { editProfile } from "./utils/apiHelpers";
 
-const ProfileEditModal = () => {
+const ProfileEditModal = ({ id }) => {
   const [name, setName] = useState("");
-  const { id } = useParams();
 
   const submitHandler = async (e) => {
     e.preventDefault();

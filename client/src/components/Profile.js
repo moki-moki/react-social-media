@@ -29,7 +29,7 @@ const Profile = () => {
         <Loader />
       ) : (
         <>
-          <ProfileInfo name={name} />
+          <ProfileInfo id={id} userId={user.user._id} name={name} />
           <ProfilePosts id={id} posts={posts} />
         </>
       )}

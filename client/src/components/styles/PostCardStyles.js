@@ -114,7 +114,7 @@ export const PostCardButtonsDislike = styled.button`
   font-size: 1.5em;
   cursor: pointer;
   padding: 0.2em;
-  background: none;
+  background: ${({ isDisliked }) => (isDisliked ? "#ff3860" : "none")};
   border: 1px solid ${({ theme }) => theme.colors.redBtn};
   transition: 0.2s ease all;
   margin: 0 0.3em;
@@ -124,20 +124,13 @@ export const PostCardButtonsDislike = styled.button`
     background: ${({ theme }) => theme.colors.redBtn};
     border-radius: 10px;
   }
-  &:active {
-    background: ${({ theme }) => theme.colors.redBtn};
-  }
-
-  &:focus {
-    background: ${({ theme }) => theme.colors.redBtn};
-  }
 `;
 
 export const PostCardButtonsLike = styled.button`
   font-size: 1.5em;
   cursor: pointer;
   padding: 0.2em;
-  background: none;
+  background: ${({ isLiked }) => (isLiked ? "#09c372" : "none")};
   border: 1px solid ${({ theme }) => theme.colors.greenBtn};
   transition: 0.2s ease all;
   margin: 0 0.3em;
@@ -148,13 +141,6 @@ export const PostCardButtonsLike = styled.button`
     border-radius: 10px;
   }
 
-  &:active {
-    background: ${({ theme }) => theme.colors.greenBtn};
-  }
-
-  &:focus {
-    background: ${({ theme }) => theme.colors.greenBtn};
-  }
 `;
 
 export const PostCardLink = styled(Link)`
