@@ -14,12 +14,22 @@ const morgan = require("morgan");
 connectDB();
 
 const app = express();
+app.use(express.json()); //Allows us to get data from req.body
 
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 //middleware
-app.use(express.json()); //Allows us to get data from req.body
 app.use(helmet());
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+      "defaul-src": ["'self'"],
+      "img-src": ["'self'", "https: data:"],
+      "script-src": ["'self'"],
+    },
+  })
+);
 app.use(morgan("common"));
 
 // For file uploading
