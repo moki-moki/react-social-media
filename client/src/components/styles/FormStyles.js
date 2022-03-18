@@ -26,6 +26,10 @@ export const Input = styled.input`
   &:invalid {
     border-bottom-color: ${({ theme }) => theme.colors.redBtn};
   }
+
+  @media (max-width: 740px) {
+    width: 80%;
+  }
 `;
 
 export const FormButton = styled.button`
@@ -41,6 +45,10 @@ export const FormButton = styled.button`
   &:hover {
     background: ${({ theme }) => theme.colors.greenBtn};
     border-radius: 15px;
+  }
+
+  @media (max-width: 740px) {
+    width: 80%;
   }
 `;
 

@@ -107,6 +107,7 @@ export const ToggleBtn = styled.span`
 
 export const NavItemWrapper = styled.div`
   position: fixed;
+  z-index: 10;
   top: 0;
   left: 0;
   height: 100vh;
@@ -125,6 +126,7 @@ export const NavItemWrapper = styled.div`
 `;
 
 export const HamburgerContainer = styled.div`
+  z-index: 10;
   width: 33px;
   height: 20px;
   display: flex;
@@ -136,6 +138,7 @@ export const HamburgerContainer = styled.div`
   z-index: 3;
 
   & span {
+    z-index: 10;
     display: block;
     width: 100%;
     height: 2px;
