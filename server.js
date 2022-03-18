@@ -25,8 +25,10 @@ app.use(
     useDefaults: true,
     directives: {
       "defaul-src": ["'self'"],
-      "img-src": ["'self'", "https: data:"],
+      "base-uri": "'self'",
+      "img-src": ["'self'", "data:"],
       "script-src": ["'self'"],
+      "style-src": ["'self'"],
     },
   })
 );
