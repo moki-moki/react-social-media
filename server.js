@@ -19,24 +19,8 @@ app.use(express.json()); //Allows us to get data from req.body
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 //middleware
-app.use(helmet());
-// app.use(
-//   helmet.contentSecurityPolicy({
-//     useDefaults: true,
-//     directives: {
-//       "img-src": ["'self'", "data:"],
-//     },
-//   })
-// );
-
-app.use(
-  helmet({
-    contentSecurityPolicy: {
-      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-      "script-src": ["'self'", "'unsafe-inline'"],
-    },
-  })
-);
+// app.use(helmet());
+app.use(helmet({ contentSecurityPolicy: false }));
 
 app.use(morgan("common"));
 
