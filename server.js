@@ -27,7 +27,7 @@ app.use(
       "defaul-src": ["'self'"],
       "base-uri": "'self'",
       "img-src": ["'self'", "data:"],
-      "script-src": ["'self'"],
+      "script-src": ["'none'"],
       "style-src": ["'self'"],
     },
   })
