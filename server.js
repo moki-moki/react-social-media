@@ -20,14 +20,24 @@ app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 //middleware
 app.use(helmet());
+// app.use(
+//   helmet.contentSecurityPolicy({
+//     useDefaults: true,
+//     directives: {
+//       "img-src": ["'self'", "data:"],
+//     },
+//   })
+// );
+
 app.use(
-  helmet.contentSecurityPolicy({
-    useDefaults: true,
-    directives: {
-      "img-src": ["'self'", "data:"],
+  helmet({
+    contentSecurityPolicy: {
+      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+      "script-src": ["'self'", "'unsafe-inline'"],
     },
   })
 );
+
 app.use(morgan("common"));
 
 // For file uploading
@@ -66,7 +76,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Error handler
-app.use(errorHandler);
+// app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
