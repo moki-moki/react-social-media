@@ -1,6 +1,6 @@
 export const getPosts = async () => {
   try {
-    const req = await fetch("/posts/");
+    const req = await fetch("/api/posts/");
     return await req.json();
   } catch (error) {
     console.log(error);
@@ -9,7 +9,7 @@ export const getPosts = async () => {
 
 export const likeHelper = async (id, myInit) => {
   try {
-    return await fetch("/posts/" + id + "/like", myInit);
+    return await fetch("/api/posts/" + id + "/like", myInit);
   } catch (error) {
     console.log(error);
   }
@@ -17,7 +17,7 @@ export const likeHelper = async (id, myInit) => {
 
 export const dislikeHelper = async (id, myInit) => {
   try {
-    return await fetch("/posts/" + id + "/dislike", myInit);
+    return await fetch("/api/posts/" + id + "/dislike", myInit);
   } catch (error) {
     console.log(error);
   }
@@ -25,7 +25,7 @@ export const dislikeHelper = async (id, myInit) => {
 
 export const deletePostHelper = async (id) => {
   try {
-    await fetch(`/posts/${id}`, {
+    await fetch(`/api/posts/${id}`, {
       method: "DELETE",
     });
   } catch (error) {
@@ -34,13 +34,13 @@ export const deletePostHelper = async (id) => {
 };
 
 export const fetchPostData = async (userId) => {
-  const req = await fetch(`/user?userId=${userId}`);
+  const req = await fetch(`/api/user?userId=${userId}`);
   return await req.json();
 };
 
 export const uploadPost = async (data) => {
   try {
-    const req = await fetch("/upload", {
+    const req = await fetch("/api/upload", {
       method: "POST",
       body: data,
     });
@@ -52,7 +52,7 @@ export const uploadPost = async (data) => {
 
 export const createPost = async (desc, img, id) => {
   try {
-    await fetch("/posts/create", {
+    await fetch("/api/posts/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -70,7 +70,7 @@ export const createPost = async (desc, img, id) => {
 
 export const fetchProfileData = async (username, id) => {
   try {
-    const req = await fetch(`/posts/profile/${username}/${id}`);
+    const req = await fetch(`/api/posts/profile/${username}/${id}`);
     return await req.json();
   } catch (error) {
     console.log(error);
@@ -79,7 +79,7 @@ export const fetchProfileData = async (username, id) => {
 
 export const deleteCommentHelper = async (id, postId) => {
   try {
-    await fetch(`/posts/delete/${id}/${postId}`, {
+    await fetch(`/api/posts/delete/${id}/${postId}`, {
       method: "DELETE",
     });
     await window.location.reload();
@@ -90,7 +90,7 @@ export const deleteCommentHelper = async (id, postId) => {
 
 export const postComment = async (postId, text, userId) => {
   try {
-    await fetch(`/posts/comment/${postId}`, {
+    await fetch(`/api/posts/comment/${postId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -109,7 +109,7 @@ export const postComment = async (postId, text, userId) => {
 
 export const editProfile = async (name, id) => {
   try {
-    await fetch(`/user/edit/${id}`, {
+    await fetch(`/api/user/edit/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

@@ -13,7 +13,7 @@ export const loginCall = async (userCredential, dispatch) => {
   };
 
   try {
-    const res = await fetch("/auth/login", myInit);
+    const res = await fetch("/api/auth/login", myInit);
     const data = await res.json();
     dispatch({ type: "LOGIN_SUCCESS", payload: data });
   } catch (error) {

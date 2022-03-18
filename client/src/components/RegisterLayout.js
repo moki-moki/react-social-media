@@ -32,7 +32,7 @@ const RegisterLayout = () => {
     };
 
     try {
-      const req = await fetch("/auth/register", myInit);
+      const req = await fetch("/api/auth/register", myInit);
       const data = await req.json();
 
       localStorage.setItem("authToken", data.token);
