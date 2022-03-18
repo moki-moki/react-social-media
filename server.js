@@ -48,10 +48,6 @@ app.use("/api/posts", postRouter);
 // app.use("/api/private", privateRouter);
 app.use("/api/user", userRouter);
 
-app.get("/", (req, res) => {
-  res.send("Welcome to homepage");
-});
-
 // HEROKU SHIT
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
