@@ -46,7 +46,7 @@ const SinglePost = () => {
   // get posts data
   useEffect(() => {
     const getData = async () => {
-      const req = await fetch(`/posts/${id}`);
+      const req = await fetch(`/api/posts/${id}`);
       const data = await req.json();
       setPostData(data);
       setLike(data.likes);
@@ -58,7 +58,7 @@ const SinglePost = () => {
   // get users data for a post
   useEffect(() => {
     const fetchPostData = async () => {
-      const req = await fetch(`/user?userId=${postData.userId}`);
+      const req = await fetch(`/api/user?userId=${postData.userId}`);
       const data = await req.json();
       setUserPost(data);
     };

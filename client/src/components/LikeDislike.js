@@ -29,15 +29,10 @@ const LikeDislike = ({ likeArr, dislikeArr, id }) => {
     setIsDislike(dislikeArr.includes(user.user._id));
   }, [user.user._id, likeArr, dislikeArr]);
 
-  console.log(likeArr)
-
-
   // like func
   const likeHandle = async () => {
-
     // check if user disliked post
     if (isDislike === true) {
-
       likeHelper(id, myInit);
       setLike(isLiked ? like - 1 : like + 1);
       setIsLiked(!isLiked);
@@ -46,33 +41,26 @@ const LikeDislike = ({ likeArr, dislikeArr, id }) => {
       dislikeHelper(id, myInit);
       setDislike(dislike - 1);
       setIsDislike(!isDislike);
-
     } else {
-
       likeHelper(id, myInit);
       setLike(isLiked ? like - 1 : like + 1);
       setIsLiked(!isLiked);
     }
-
   };
 
   // dislike func
   const dislikeHandle = async () => {
-
     // check if user already liked a post
     if (isLiked === true) {
-
-      // sets isLiked to false and removes the like 
+      // sets isLiked to false and removes the like
       likeHelper(id, myInit);
       setLike(like - 1);
       setIsLiked(!isLiked);
-
 
       dislikeHelper(id, myInit);
       setDislike(isDislike ? dislike - 1 : dislike + 1);
       setIsDislike(!isDislike);
     } else {
-
       dislikeHelper(id, myInit);
       setDislike(isDislike ? dislike - 1 : dislike + 1);
       setIsDislike(!isDislike);
@@ -81,16 +69,10 @@ const LikeDislike = ({ likeArr, dislikeArr, id }) => {
 
   return (
     <>
-      <PostCardButtonsLike
-        onClick={likeHandle}
-        isLiked={isLiked}
-      >
+      <PostCardButtonsLike onClick={likeHandle} isLiked={isLiked}>
         &#128077; {like > 0 ? like : null}
       </PostCardButtonsLike>
-      <PostCardButtonsDislike
-        isDisliked={isDislike}
-        onClick={dislikeHandle}
-      >
+      <PostCardButtonsDislike isDisliked={isDislike} onClick={dislikeHandle}>
         &#128169;{dislike > 0 ? dislike : null}
       </PostCardButtonsDislike>
     </>

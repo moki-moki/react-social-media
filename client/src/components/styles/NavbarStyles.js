@@ -101,7 +101,7 @@ export const ToggleBtn = styled.span`
   left: ${({ toggle }) => (toggle ? "100%" : "0%")};
   transform: ${({ toggle }) =>
     toggle ? "translateX(-100%)" : " translateX(0%)"};
-  z-index: 3;
+  z-index: 20;
   transition: 0.3s ease all;
 `;
 
