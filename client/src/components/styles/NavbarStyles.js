@@ -101,7 +101,7 @@ export const ToggleBtn = styled.span`
   left: ${({ toggle }) => (toggle ? "100%" : "0%")};
   transform: ${({ toggle }) =>
     toggle ? "translateX(-100%)" : " translateX(0%)"};
-  z-index: 20;
+  z-index: 3;
   transition: 0.3s ease all;
 `;
 
@@ -135,7 +135,7 @@ export const HamburgerContainer = styled.div`
   align-items: center;
   position: relative;
   transition: 0.3s ease all;
-  z-index: 3;
+  z-index: 20;
 
   & span {
     z-index: 10;
