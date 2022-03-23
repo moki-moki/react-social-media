@@ -31,19 +31,18 @@ const About = () => {
         <FaqQuestionsContainer>
           <br />
           <b>Question: </b>
-          <p1>Can i sing up without my personal infomation?</p1>
+          <p1>Can I sing up without my personal infomation?</p1>
           <br />
           <b>Awnser: </b>
           <p1>
             Yea, just use something that looks like an email and use a random
-            password, but remember you can't recover it.
+            password, but remember that you can't recover it.
           </p1>
           <br />
           <br />
           <b>Question: </b>
           <p1>What is this platform?</p1>
           <br />
-
           <b>Awnser: </b>
           <p1>
             This is a personal project that replicates functionality of a social
@@ -65,7 +64,7 @@ const About = () => {
         <AboutHeading style={{ marginTop: "1em" }}>Contact</AboutHeading>
         <br />
         <b>Email: </b>
-        <p1>scrapironscarecrowdumdum@gmail.com</p1>
+        <p1>alexloremipsum@gmail.com</p1>
         <br />
         <b>Github: </b>
         <p1>moki-moki</p1>
