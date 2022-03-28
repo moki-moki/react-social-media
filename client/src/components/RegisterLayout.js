@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   FormButton,
@@ -16,6 +16,8 @@ const RegisterLayout = () => {
   const email = useRef();
 
   const history = useHistory();
+
+  const [err, setErr] = useState(false);
 
   const registerHandler = async (e) => {
     e.preventDefault();
@@ -40,6 +42,7 @@ const RegisterLayout = () => {
       history.push("/");
     } catch (error) {
       console.log(error);
+      setErr(!err);
     }
   };
 
@@ -77,7 +80,7 @@ const RegisterLayout = () => {
           Already have an account? <Link to="/login">Login</Link>
         </SpanForm>
       </FormControl>
-      {error ? (
+      {err ? (
         <NotificationFail text={"Try different Username or Email..."} />
       ) : null}
     </div>
