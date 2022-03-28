@@ -1,12 +1,10 @@
 import { NotificationFailContainer } from "./styles/NotificationStyles/NotificationFailStyles";
 import { NotificationSuccessText } from "./styles/NotificationStyles/NotificationSuccess";
 
-const NotificationFail = () => {
+const NotificationFail = ({ text }) => {
   return (
     <NotificationFailContainer>
-      <NotificationSuccessText>
-        Oops... Wrong Credentials
-      </NotificationSuccessText>
+      <NotificationSuccessText>{text}</NotificationSuccessText>
     </NotificationFailContainer>
   );
 };

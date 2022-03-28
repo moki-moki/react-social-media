@@ -41,7 +41,7 @@ const LoginLayout = () => {
           Don't have an account? <Link to="/register">Register</Link>
         </SpanForm>
       </FormControl>
-      {error ? <NotificationFail /> : null}
+      {error ? <NotificationFail text={"Wrong Credentials..."} /> : null}
     </div>
   );
 };

@@ -8,6 +8,7 @@ import {
   SpanForm,
 } from "./styles/FormStyles";
 import { useHistory } from "react-router";
+import NotificationFail from "./NotificationFail";
 
 const RegisterLayout = () => {
   const username = useRef();
@@ -76,6 +77,9 @@ const RegisterLayout = () => {
           Already have an account? <Link to="/login">Login</Link>
         </SpanForm>
       </FormControl>
+      {error ? (
+        <NotificationFail text={"Try different Username or Email..."} />
+      ) : null}
     </div>
   );
 };
