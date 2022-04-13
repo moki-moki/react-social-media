@@ -134,10 +134,10 @@ const Navbar = ({ user, setThemes, themes }) => {
             </NavLeftSide>
           </NavItemWrapper>
           <ToggleContainer>
-            <ToggleItemWrapper>
+            <ToggleItemWrapper onClick={changeTheme}>
               <span>&#127774;</span>
               <span>&#127771;</span>
-              <ToggleBtn toggle={toggle} onClick={changeTheme}></ToggleBtn>
+              <ToggleBtn toggle={toggle}></ToggleBtn>
             </ToggleItemWrapper>
           </ToggleContainer>
         </>

@@ -25,6 +25,10 @@ const UserSchema = new mongoose.Schema({
     minlength: 6,
     select: false,
   },
+  friends: {
+    type: Array,
+    default: [],
+  },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });

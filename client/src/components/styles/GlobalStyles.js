@@ -1,5 +1,4 @@
 import { createGlobalStyle } from "styled-components";
-
 const GlobalStyles = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
@@ -10,7 +9,7 @@ const GlobalStyles = createGlobalStyle`
 }
 body {
     background: ${({ theme }) => theme.colors.body};
-    font-family: ${({ theme }) => theme.fonts};
+    font-family: "Montserrat", sans-serif;
     line-height: 1.5;
     position: relative;
     min-height: 100vh;

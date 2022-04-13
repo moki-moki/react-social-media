@@ -8,14 +8,14 @@ import { AuthContext } from "./context/AuthContext";
 import { MainHomeContainer } from "./styles/HomepageStyles";
 
 const HomepageLayout = () => {
-  const [data, setData] = useState([]);
+  const [posts, setPosts] = useState([]);
 
   const { user } = useContext(AuthContext);
   const history = useHistory();
 
   useEffect(() => {
     getPosts().then((data) =>
-      setData(
+      setPosts(
         data.sort((p1, p2) => {
           return new Date(p2.createdAt) - new Date(p1.createdAt);
         })
@@ -36,16 +36,16 @@ const HomepageLayout = () => {
 
   return (
     <MainHomeContainer>
-      {data.length === 0 ? (
+      {posts.length === 0 ? (
         <Loader />
       ) : (
         <>
-          {data.map((post) => (
+          {posts.map((post) => (
             <Post key={post._id} post={post} />
           ))}
         </>
       )}
-      <BtnArrowUp onClick={handleToTop}>^</BtnArrowUp>
+      <BtnArrowUp onClick={handleToTop}>&#9650;</BtnArrowUp>
     </MainHomeContainer>
   );
 };

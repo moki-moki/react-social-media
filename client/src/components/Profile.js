@@ -9,27 +9,38 @@ import { AuthContext } from "./context/AuthContext";
 
 const Profile = () => {
   const { username, id } = useParams();
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState();
   const [info, setInfo] = useState({});
-  const { username: name } = info;
   const { user } = useContext(AuthContext);
   const history = useHistory();
+
+  const { username: name, friends } = info;
 
   useEffect(() => {
     if (!user) {
       history.push("/login");
     }
-    fetchProfileData(username, id).then((data) => setPosts(data));
-    fetchPostData(id).then((data) => setInfo(data));
+    console.log(posts);
+    console.log(info);
+    const getData = async () => {
+      await fetchProfileData(username, id).then((data) => setPosts(data));
+      await fetchPostData(id).then((data) => setInfo(data));
+    };
+    getData();
   }, [id, username, user]);
 
   return (
     <>
-      {posts.length === 0 && name === undefined ? (
+      {posts === undefined ? (
         <Loader />
       ) : (
         <>
-          <ProfileInfo id={id} userId={user.user._id} name={name} />
+          <ProfileInfo
+            id={id}
+            userId={user.user._id}
+            friends={friends}
+            name={name}
+          />
           <ProfilePosts id={id} posts={posts} />
         </>
       )}

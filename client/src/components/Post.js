@@ -67,7 +67,11 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
               <PostCardLink to={`/posts/${post._id}`}>{post.desc}</PostCardLink>
             </PostCardDesc>
           </div>
-          <img src={post.img} style={{ width: "100%" }} alt="" />
+          <img
+            src={`http://localhost:5000/images/${post.img}`}
+            style={{ width: "100%" }}
+            alt=""
+          />
           <PostCardBottomBar>
             <PostCardBtnContainer>
               <LikeDislike

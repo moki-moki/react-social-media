@@ -90,6 +90,7 @@ export const ToggleItemWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const ToggleBtn = styled.span`

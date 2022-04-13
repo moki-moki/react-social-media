@@ -1,3 +1,4 @@
+// Gets all posts
 export const getPosts = async () => {
   try {
     const req = await fetch("/api/posts/");
@@ -7,6 +8,7 @@ export const getPosts = async () => {
   }
 };
 
+// Likes post
 export const likeHelper = async (id, myInit) => {
   try {
     return await fetch("/api/posts/" + id + "/like", myInit);
@@ -15,6 +17,7 @@ export const likeHelper = async (id, myInit) => {
   }
 };
 
+// Dislikes post
 export const dislikeHelper = async (id, myInit) => {
   try {
     return await fetch("/api/posts/" + id + "/dislike", myInit);
@@ -23,6 +26,7 @@ export const dislikeHelper = async (id, myInit) => {
   }
 };
 
+// Deletes post
 export const deletePostHelper = async (id) => {
   try {
     await fetch(`/api/posts/${id}`, {
@@ -33,11 +37,13 @@ export const deletePostHelper = async (id) => {
   }
 };
 
+// Gets single post data
 export const fetchPostData = async (userId) => {
   const req = await fetch(`/api/user?userId=${userId}`);
   return await req.json();
 };
 
+// Upload post
 export const uploadPost = async (data) => {
   try {
     const req = await fetch("/api/upload", {
@@ -50,6 +56,7 @@ export const uploadPost = async (data) => {
   }
 };
 
+// Creates Post for uploading
 export const createPost = async (desc, img, id) => {
   try {
     await fetch("/api/posts/create", {
@@ -68,6 +75,7 @@ export const createPost = async (desc, img, id) => {
   }
 };
 
+// Gets profile data
 export const fetchProfileData = async (username, id) => {
   try {
     const req = await fetch(`/api/posts/profile/${username}/${id}`);
@@ -77,6 +85,7 @@ export const fetchProfileData = async (username, id) => {
   }
 };
 
+// Deletes Comment
 export const deleteCommentHelper = async (id, postId) => {
   try {
     await fetch(`/api/posts/delete/${id}/${postId}`, {
@@ -88,6 +97,7 @@ export const deleteCommentHelper = async (id, postId) => {
   }
 };
 
+// Posts Comment
 export const postComment = async (postId, text, userId) => {
   try {
     await fetch(`/api/posts/comment/${postId}`, {
@@ -107,6 +117,7 @@ export const postComment = async (postId, text, userId) => {
   }
 };
 
+// Edits profiles username
 export const editProfile = async (name, id) => {
   try {
     await fetch(`/api/user/edit/${id}`, {
@@ -120,6 +131,55 @@ export const editProfile = async (name, id) => {
     });
     localStorage.removeItem("user");
     window.location.reload();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Lists all users friends from api
+export const getFriends = async (id) => {
+  try {
+    const req = await fetch(`/api/user/friends/${id}`);
+    const res = await req.json();
+    console.log(res);
+    return await res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Add a friend
+export const addFriend = async (id, userId) => {
+  try {
+    await fetch(`/api/user/addFriend/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId,
+      }),
+    });
+
+    await window.location.reload();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Removes a friend
+export const removeFriend = async (id, userId) => {
+  try {
+    await fetch(`/api/user/removeFriend/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId,
+      }),
+    });
+    await window.location.reload();
   } catch (error) {
     console.log(error);
   }

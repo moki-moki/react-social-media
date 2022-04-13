@@ -1,7 +1,6 @@
 require("dotenv").config();
 const express = require("express");
 const authRouter = require("./routes/auth");
-const privateRouter = require("./routes/private");
 const userRouter = require("./routes/user");
 const postRouter = require("./routes/post");
 const connectDB = require("./config/db");
@@ -11,9 +10,11 @@ const path = require("path");
 const helmet = require("helmet");
 const morgan = require("morgan");
 
+// Http server and express app
+const { srv, app } = require("./socketConfig/socketConfig");
+
 connectDB();
 
-const app = express();
 app.use(express.json()); //Allows us to get data from req.body
 
 app.use("/images", express.static(path.join(__dirname, "public/images")));
@@ -47,10 +48,9 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 // Routes
 app.use("/api/auth", authRouter);
 app.use("/api/posts", postRouter);
-// app.use("/api/private", privateRouter);
 app.use("/api/user", userRouter);
 
-// HEROKU SHIT
+// HEROKU  STUFF
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
 
@@ -60,11 +60,11 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Error handler
-// app.use(errorHandler);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-const server = app.listen(PORT, () =>
+const server = srv.listen(PORT, () =>
   console.log(`Sever running on port ${PORT}`)
 );
 

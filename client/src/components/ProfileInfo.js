@@ -6,47 +6,121 @@ import {
   ProfilePicture,
   ProfilePictureContainer,
   ProfilePictureWrapper,
+  ProfileCardMainContainer,
+  ProfileFriendContainer,
+  ProfileBtns,
+  AddFriendBtn,
+  ViewFriendsBtn,
+  RemoveFriendBtn,
 } from "./styles/ProfileStyles/ProfileStyles";
 import ProfileEditModal from "./ProfileEditModal";
 import { CloseBtn } from "./styles/ProfileStyles/ProfileEditModalStyles";
+import FriendsModal from "./FriendsModal";
+import { addFriend, getFriends, removeFriend } from "./utils/apiHelpers";
 
-const ProfileInfo = ({ name, id, userId }) => {
+const ProfileInfo = ({ name, id, userId, friends }) => {
   const [toggleEdit, setToggleEdit] = useState(false);
-  return (
-    <ProfileCardContainer>
+  const [toggleFriends, setToggleFriends] = useState(false);
+  const [usersFriends, setUsersFriends] = useState([]);
 
-      {toggleEdit ? (
-        <>
-          <ProfileEditModal id={id} />
-          <CloseBtn onClick={() => setToggleEdit(!toggleEdit)}>
-            <h5>&#10060;</h5>
-          </CloseBtn>
-        </>
-      ) : (
-        <>
-          <ProfilePictureContainer>
-            <ProfilePictureWrapper>
-              <ProfilePicture
-                src={`
+  // Add friend
+  const addFriendHandler = async (id, userId) => {
+    await addFriend(id, userId);
+  };
+
+  // Remove friend
+  const removeFriendHandler = async (id, userId) => {
+    await removeFriend(id, userId);
+  };
+
+  // Displays Friend Modal and gets data (users friend) for modal
+  const friendsHandlerModal = async (id) => {
+    // Opens & closes modal
+    setToggleFriends(!toggleFriends);
+
+    // Check if user has friends, if not then don't call api
+    if (friends.length !== 0) {
+      // Gets friends from api
+      await getFriends(id).then((data) => setUsersFriends(data));
+    }
+  };
+  return (
+    <ProfileCardMainContainer>
+      <ProfileCardContainer>
+        {toggleEdit ? (
+          <>
+            <ProfileEditModal id={id} />
+            <CloseBtn onClick={() => setToggleEdit(!toggleEdit)}>
+              <h5>&#10060;</h5>
+            </CloseBtn>
+          </>
+        ) : (
+          <>
+            <ProfilePictureContainer>
+              <ProfilePictureWrapper>
+                <ProfilePicture
+                  src={`
 https://avatars.dicebear.com/api/identicon/${name}.svg
                 `}
-              />
-            </ProfilePictureWrapper>
-          </ProfilePictureContainer>
-          <ProfileInfoContainer>
-            <h3>
-              Name: <span>{name}</span>
-            </h3>
-            {userId === id ?
+                />
+              </ProfilePictureWrapper>
+            </ProfilePictureContainer>
+            <ProfileInfoContainer>
+              <h3>
+                Name: <span>{name}</span>
+              </h3>
+              <ProfileBtns>
+                {userId === id ? (
+                  <EditBtn onClick={() => setToggleEdit(!toggleEdit)}>
+                    <h5>Edit &#128295;</h5>
+                  </EditBtn>
+                ) : null}
+              </ProfileBtns>
+            </ProfileInfoContainer>
+          </>
+        )}
+      </ProfileCardContainer>
 
-              <EditBtn onClick={() => setToggleEdit(!toggleEdit)}>
-                <h5>Edit &#128295;</h5>
-              </EditBtn> : null
-            }
-          </ProfileInfoContainer>
-        </>
-      )}
-    </ProfileCardContainer>
+      <ProfileFriendContainer>
+        <p>Number of Friends: {friends?.length}</p>
+        {/* If friends modal is opend display close friend modal */}
+        {toggleFriends ? (
+          <ViewFriendsBtn onClick={() => setToggleFriends(!toggleFriends)}>
+            Close Modal &#10060;
+          </ViewFriendsBtn>
+        ) : (
+          <ViewFriendsBtn onClick={() => friendsHandlerModal(id)}>
+            View Friends &#128064;
+          </ViewFriendsBtn>
+        )}
+
+        {userId !== id ? (
+          <>
+            {friends?.includes(userId) ? (
+              <RemoveFriendBtn onClick={() => removeFriendHandler(id, userId)}>
+                Remove Friend &#128549;
+              </RemoveFriendBtn>
+            ) : (
+              <AddFriendBtn onClick={() => addFriendHandler(id, userId)}>
+                Add a Friend &#128526;
+              </AddFriendBtn>
+            )}
+          </>
+        ) : null}
+      </ProfileFriendContainer>
+
+      {/* Friends Modal */}
+      {toggleFriends ? (
+        <FriendsModal
+          toggleFriends={toggleFriends}
+          setToggleFriends={setToggleFriends}
+          usersFriends={usersFriends}
+          userId={userId}
+          id={id}
+          addFriendHandler={addFriendHandler}
+        />
+      ) : null}
+    </ProfileCardMainContainer>
   );
 };
 
