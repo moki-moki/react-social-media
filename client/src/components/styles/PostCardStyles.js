@@ -13,14 +13,14 @@ export const PostCardContainer = styled.div`
   }
 
   @media (max-width: 590px) {
-    width: 95%;
+    width: 90%;
   }
 `;
 
 export const PostCardContentContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
-  margin: 1em 0;
+  margin: 2em 0;
   width: 100%;
 `;
 
@@ -140,7 +140,6 @@ export const PostCardButtonsLike = styled.button`
     background: ${({ theme }) => theme.colors.greenBtn};
     border-radius: 10px;
   }
-
 `;
 
 export const PostCardLink = styled(Link)`

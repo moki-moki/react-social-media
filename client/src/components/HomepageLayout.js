@@ -8,7 +8,7 @@ import { AuthContext } from "./context/AuthContext";
 import { MainHomeContainer } from "./styles/HomepageStyles";
 
 const HomepageLayout = () => {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState();
 
   const { user } = useContext(AuthContext);
   const history = useHistory();
@@ -36,7 +36,7 @@ const HomepageLayout = () => {
 
   return (
     <MainHomeContainer>
-      {posts.length === 0 ? (
+      {posts === undefined ? (
         <Loader />
       ) : (
         <>

@@ -13,4 +13,13 @@ export const BtnArrowUp = styled.span`
   &:hover {
     color: ${({ theme }) => theme.colors.editBtn};
   }
+
+  @media (max-width: 910px) {
+    left: 3%;
+    bottom: 3%;
+  }
+
+  @media (max-width: 590px) {
+    display: none;
+  }
 `;

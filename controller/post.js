@@ -138,7 +138,6 @@ exports.commentPost = async (req, res, next) => {
 exports.deleteComment = async (req, res) => {
   try {
     const { postId, commentId } = req.params;
-    console.log(postId, commentId);
 
     const post = await Post.findById(postId);
 

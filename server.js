@@ -1,17 +1,26 @@
 require("dotenv").config();
+
 const express = require("express");
-const authRouter = require("./routes/auth");
-const userRouter = require("./routes/user");
-const postRouter = require("./routes/post");
-const connectDB = require("./config/db");
-const errorHandler = require("./middleware/error");
 const multer = require("multer");
 const path = require("path");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const http = require("http");
 
-// Http server and express app
-const { srv, app } = require("./socketConfig/socketConfig");
+const authRouter = require("./routes/auth");
+const userRouter = require("./routes/user");
+const postRouter = require("./routes/post");
+const conversationRouter = require("./routes/conversations");
+const connectDB = require("./config/db");
+const errorHandler = require("./middleware/error");
+const sockets = require("./sockets/sockets");
+
+const app = express();
+
+const server = http.createServer(app);
+const io = sockets.sio(server);
+
+sockets.connection(io);
 
 connectDB();
 
@@ -49,6 +58,7 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 app.use("/api/auth", authRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/user", userRouter);
+app.use("/api/msgs", conversationRouter);
 
 // HEROKU  STUFF
 if (process.env.NODE_ENV === "production") {
@@ -64,11 +74,11 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-const server = srv.listen(PORT, () =>
+const serverStart = server.listen(PORT, () =>
   console.log(`Sever running on port ${PORT}`)
 );
 
 process.on("unhandledRejection", (err, promise) => {
   console.log(`Logged Error: ${err.message}`);
-  server.close(() => process.exit(1));
+  serverStart.close(() => process.exit(1));
 });

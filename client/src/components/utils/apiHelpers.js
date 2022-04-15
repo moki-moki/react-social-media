@@ -161,7 +161,7 @@ export const addFriend = async (id, userId) => {
       }),
     });
 
-    await window.location.reload();
+    window.location.reload();
   } catch (error) {
     console.log(error);
   }
@@ -180,6 +180,66 @@ export const removeFriend = async (id, userId) => {
       }),
     });
     await window.location.reload();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Get single user
+export const getUserData = async (id) => {
+  const req = await fetch(`/api/user?userId=${id}`);
+  const res = await req.json();
+  return res;
+};
+
+// Messages!
+
+// Gets all conversations
+export const getConversation = async (id) => {
+  try {
+    const req = await fetch(`/api/msgs/conversation/${id}`);
+    const res = await req.json();
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Get messages from conversation
+export const getMessages = async (id) => {
+  try {
+    const req = await fetch(`/api/msgs/${id}`);
+    const res = await req.json();
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// find conversation
+export const findConvo = async (userId, friendId) => {
+  try {
+    const req = await fetch(`/api/msgs/conversation/${userId}/${friendId}`);
+    const res = await req.json();
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Send message
+export const sendMsg = async (data) => {
+  try {
+    console.log(data);
+    const req = await fetch("/api/msgs/sendMsg", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const res = await req.json();
+    return res;
   } catch (error) {
     console.log(error);
   }

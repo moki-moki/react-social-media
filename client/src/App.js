@@ -6,12 +6,7 @@ import { AuthContext } from "./components/context/AuthContext";
 import GlobalStyles from "./components/styles/GlobalStyles";
 
 // Routing
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LoginLayout from "./components/LoginLayout";
 import RegisterLayout from "./components/RegisterLayout";
 import HomepageLayout from "./components/HomepageLayout";
@@ -24,6 +19,7 @@ import Profile from "./components/Profile";
 
 // import theme from "./components/styles/theme";
 import theme from "./components/styles/theme";
+import ChatWindow from "./components/ChatWindow";
 
 function App() {
   const { user, error } = useContext(AuthContext);
@@ -59,6 +55,9 @@ function App() {
           </Route>
           <Route path="/profile/:username/:id">
             <Profile />
+          </Route>
+          <Route path="/chat">
+            <ChatWindow />
           </Route>
         </Switch>
         <Footer />

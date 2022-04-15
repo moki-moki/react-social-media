@@ -164,3 +164,15 @@ export const HamburgerContainer = styled.div`
     display: ${({ hamburgerToggle }) => (hamburgerToggle ? "none" : "block")};
   }
 `;
+
+export const AdditionWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & > a {
+    font-size: 1.3em;
+    margin-right: 0.3em;
+    cursor: pointer;
+  }
+`;

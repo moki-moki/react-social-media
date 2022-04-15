@@ -14,6 +14,7 @@ import {
   ToggleBtn,
   ToggleContainer,
   ToggleItemWrapper,
+  AdditionWrapper,
 } from "./styles/NavbarStyles";
 
 const Navbar = ({ user, setThemes, themes }) => {
@@ -133,13 +134,16 @@ const Navbar = ({ user, setThemes, themes }) => {
               </Link>
             </NavLeftSide>
           </NavItemWrapper>
-          <ToggleContainer>
-            <ToggleItemWrapper onClick={changeTheme}>
-              <span>&#127774;</span>
-              <span>&#127771;</span>
-              <ToggleBtn toggle={toggle}></ToggleBtn>
-            </ToggleItemWrapper>
-          </ToggleContainer>
+          <AdditionWrapper>
+            <Link to="/chat">&#128172;</Link>
+            <ToggleContainer>
+              <ToggleItemWrapper onClick={changeTheme}>
+                <span>&#127774;</span>
+                <span>&#127771;</span>
+                <ToggleBtn toggle={toggle}></ToggleBtn>
+              </ToggleItemWrapper>
+            </ToggleContainer>
+          </AdditionWrapper>
         </>
       ) : (
         <>
