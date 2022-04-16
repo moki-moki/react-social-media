@@ -12,6 +12,8 @@ const removeUser = (socketId) => {
 };
 
 const getSingleUser = (userId) => {
+  console.log(userId);
+  console.log(users);
   return users.find((user) => user.userId === userId);
 };
 
@@ -39,7 +41,10 @@ exports.connection = (io) => {
     socket.on("sendMessage", ({ senderId, receiverId, text }) => {
       const user = getSingleUser(receiverId);
 
-      io.to(user.socketId).emit("getMessage", {
+      console.log(user);
+      console.log(receiverId);
+
+      io.to(user?.socketId).emit("getMessage", {
         senderId,
         text,
       });

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   EditBtn,
   ProfileCardContainer,
@@ -17,11 +17,16 @@ import ProfileEditModal from "./ProfileEditModal";
 import { CloseBtn } from "./styles/ProfileStyles/ProfileEditModalStyles";
 import FriendsModal from "./FriendsModal";
 import { addFriend, getFriends, removeFriend } from "./utils/apiHelpers";
+import { AuthContext } from "./context/AuthContext";
 
 const ProfileInfo = ({ name, id, userId, friends }) => {
   const [toggleEdit, setToggleEdit] = useState(false);
   const [toggleFriends, setToggleFriends] = useState(false);
   const [usersFriends, setUsersFriends] = useState([]);
+
+  const { user } = useContext(AuthContext);
+
+  console.log(user);
 
   // Add friend
   const addFriendHandler = async (id, userId) => {
@@ -116,6 +121,7 @@ https://avatars.dicebear.com/api/identicon/${name}.svg
           setToggleFriends={setToggleFriends}
           usersFriends={usersFriends}
           userId={userId}
+          friends={friends}
           id={id}
           addFriendHandler={addFriendHandler}
         />

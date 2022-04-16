@@ -12,3 +12,13 @@ export const LoginFail = (error) => ({
   type: "LOGIN_FAIL",
   payload: error,
 });
+
+export const AddFriend = (userId) => ({
+  type: "ADDFRIEND",
+  payload: userId,
+});
+
+export const Unfriend = (userId) => ({
+  type: "UNFRIEND",
+  payload: userId,
+});

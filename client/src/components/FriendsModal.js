@@ -22,6 +22,7 @@ const FriendsModal = ({
   userId,
   id,
   addFriendHandler,
+  friends,
 }) => {
   const { user } = useContext(AuthContext);
 
@@ -46,7 +47,7 @@ const FriendsModal = ({
                 <h5>{friend.username}</h5>
               </FriendNameAndImageContainer>
               {/* Render add friend btn if the main user dosen't have that friend in friends list */}
-              {user.user.friends.includes(friend._id) ? (
+              {friends.includes(friend._id) ? (
                 <RemoveFriendBtn>Remove Friend &#128549; </RemoveFriendBtn>
               ) : (
                 <>

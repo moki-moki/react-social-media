@@ -18,6 +18,7 @@ const AuthReducer = (state, action) => {
         loading: false,
         error: true,
       };
+
     default:
       return state;
   }

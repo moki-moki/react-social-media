@@ -18,7 +18,8 @@ import { io } from "socket.io-client";
 import OnlineUsersComp from "./OnlineUsersComp";
 
 const ChatWindow = () => {
-  const user = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+
   const history = useHistory();
 
   // List of conversations
@@ -64,21 +65,20 @@ const ChatWindow = () => {
       history.push("/login");
     }
 
-    socket.current.emit("addUser", user.user.user._id);
+    socket.current.emit("addUser", user.user._id);
 
     socket.current.on("getUsers", (users) => {
       setOnlineUsers(
-        user.user.user.friends.filter((f) => users.some((u) => u.userId === f))
+        user.user.friends.filter((f) => users.some((u) => u.userId === f))
       );
-      console.log(onlineUsers);
     });
 
     // Gets conversations
-    const getConvs = async (id) => {
+    const getConvs = (id) => {
       getConversation(id).then((data) => setConversations(data));
     };
 
-    getConvs(user.user.user._id);
+    getConvs(user.user._id);
   }, [user]);
 
   // Arrival Effect
@@ -109,18 +109,18 @@ const ChatWindow = () => {
 
     // creating new message that inputs to dom
     const message = {
-      sender: user.user.user._id,
+      sender: user.user._id,
       text: inputMessage,
       conversationId: currentChat._id,
     };
 
     const receiverId = currentChat.members.find(
-      (member) => member !== user.user.user._id
+      (member) => member !== user.user._id
     );
 
     if (messages !== "") {
       socket.current.emit("sendMessage", {
-        senderId: user.user.user._id,
+        senderId: user.user._id,
         receiverId,
         text: inputMessage,
       });
@@ -146,7 +146,7 @@ const ChatWindow = () => {
                 key={conversation._id}
                 onClick={() => setCurrentChat(conversation)}
               >
-                <Conversation con={conversation} id={user.user.user._id} />
+                <Conversation con={conversation} id={user.user._id} />
               </div>
             ))}
           </div>
@@ -164,7 +164,7 @@ const ChatWindow = () => {
                   stamp={msg.createdAt}
                   text={msg.text}
                   senderId={msg.sender}
-                  id={user.user.user._id}
+                  id={user.user._id}
                 />
               </div>
             ))}
@@ -183,7 +183,7 @@ const ChatWindow = () => {
         <OnlineUsersWrapper>
           <h1>Online Users</h1>
           <OnlineUsersComp
-            userId={user.user.user._id}
+            userId={user.user._id}
             setCurrentChat={setCurrentChat}
             onlineUsers={onlineUsers}
           />

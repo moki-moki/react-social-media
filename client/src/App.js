@@ -6,7 +6,12 @@ import { AuthContext } from "./components/context/AuthContext";
 import GlobalStyles from "./components/styles/GlobalStyles";
 
 // Routing
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 import LoginLayout from "./components/LoginLayout";
 import RegisterLayout from "./components/RegisterLayout";
 import HomepageLayout from "./components/HomepageLayout";
@@ -57,7 +62,7 @@ function App() {
             <Profile />
           </Route>
           <Route path="/chat">
-            <ChatWindow />
+            {user ? <ChatWindow /> : <Redirect to="/login" />}
           </Route>
         </Switch>
         <Footer />

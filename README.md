@@ -4,7 +4,6 @@ I've created this project with MERN stack.
 
 https://user-images.githubusercontent.com/88168610/155989621-a135269e-1bb1-4fd3-ac1f-971182500b2b.mp4
 
-
 ## TODO
 
 - [x] Adding a friend

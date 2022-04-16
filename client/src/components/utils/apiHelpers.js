@@ -161,7 +161,7 @@ export const addFriend = async (id, userId) => {
       }),
     });
 
-    window.location.reload();
+    await window.location.reload();
   } catch (error) {
     console.log(error);
   }

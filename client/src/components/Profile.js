@@ -20,8 +20,6 @@ const Profile = () => {
     if (!user) {
       history.push("/login");
     }
-    console.log(posts);
-    console.log(info);
     const getData = async () => {
       await fetchProfileData(username, id).then((data) => setPosts(data));
       await fetchPostData(id).then((data) => setInfo(data));
