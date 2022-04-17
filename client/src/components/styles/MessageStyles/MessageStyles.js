@@ -4,13 +4,14 @@ export const MessageContainer = styled.div`
   display: flex;
   flex-direction: ${({ self }) => (self ? "row-reverse" : null)};
   margin: 0.5em 0;
+  overflow-wrap: anywhere;
 `;
 
 export const UserContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  padding: 0.3em;
+  padding: 0.5em;
   border-radius: 10px;
   min-width: 100px;
   background: ${({ theme }) => theme.colors.hoverOverlay};

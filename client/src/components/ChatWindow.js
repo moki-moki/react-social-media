@@ -1,13 +1,17 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import {
+  BtnContainer,
   ChatBoxContainer,
   ChatBoxInput,
   ChatBoxMessageBox,
+  ConvoHeadingContainer,
   FriendListContainer,
   FriendListWrapper,
   MainWindowContainer,
   OnlineUsers,
   OnlineUsersWrapper,
+  OpenCloseBtn,
+  OpenCloseOnlineFriends,
 } from "./styles/ChatwindowStyles/ChatWindowStyles";
 import { getConversation, getMessages, sendMsg } from "./utils/apiHelpers";
 import { AuthContext } from "./context/AuthContext";
@@ -42,6 +46,12 @@ const ChatWindow = () => {
 
   // Online users
   const [onlineUsers, setOnlineUsers] = useState([]);
+
+  // OpenClose conversations on mobile
+  const [toggleConversation, setToggleConversation] = useState(true);
+
+  // OpenClose Online Friends on mobile
+  const [toggleOnlineFriends, setToggleOnlineFriends] = useState(true);
 
   // Sockets
   const socket = useRef();
@@ -136,9 +146,18 @@ const ChatWindow = () => {
 
   return (
     <MainWindowContainer>
-      <FriendListContainer>
+      <FriendListContainer toggle={toggleConversation}>
         <FriendListWrapper>
-          <h1>Conversations</h1>
+          <ConvoHeadingContainer>
+            <h1>Conversations</h1>
+
+            <OpenCloseBtn
+              toggle={toggleConversation}
+              onClick={() => setToggleConversation(!toggleConversation)}
+            >
+              &#10060;
+            </OpenCloseBtn>
+          </ConvoHeadingContainer>
           <div>
             {/* CONVERSATIONS */}
             {conversations?.map((conversation) => (
@@ -179,9 +198,17 @@ const ChatWindow = () => {
           </form>
         </ChatBoxContainer>
       )}
-      <OnlineUsers>
+      <OnlineUsers toggle={toggleOnlineFriends}>
         <OnlineUsersWrapper>
-          <h1>Online Users</h1>
+          <ConvoHeadingContainer>
+            <OpenCloseOnlineFriends
+              toggle={toggleOnlineFriends}
+              onClick={() => setToggleOnlineFriends(!toggleOnlineFriends)}
+            >
+              &#10060;
+            </OpenCloseOnlineFriends>
+            <h1>Online User</h1>
+          </ConvoHeadingContainer>
           <OnlineUsersComp
             userId={user.user._id}
             setCurrentChat={setCurrentChat}

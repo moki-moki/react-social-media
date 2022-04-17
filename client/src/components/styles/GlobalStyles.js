@@ -14,6 +14,7 @@ body {
     position: relative;
     min-height: 100vh;
     padding-bottom: 45px;
+    overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5 {

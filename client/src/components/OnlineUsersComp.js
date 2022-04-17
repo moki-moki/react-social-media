@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import { findConvo, getFriends } from "./utils/apiHelpers";
+import {
+  ConversationImg,
+  ConversationMainContainer,
+} from "./styles/ConversationStyles/ConversationStyles";
 
 const OnlineUsersComp = ({ userId, setCurrentChat, onlineUsers }) => {
   const [friends, setFriends] = useState([]);
@@ -22,14 +26,23 @@ const OnlineUsersComp = ({ userId, setCurrentChat, onlineUsers }) => {
   console.log(onlineFriends);
 
   //find convo
-  const findConversation = async (friendId) => {
+  const findConversation = async (userId, friendId) => {
     await findConvo(userId, friendId).then((data) => setCurrentChat(data));
   };
 
   return (
     <div>
       {onlineFriends.map((onlineFriend) => (
-        <h1>{onlineFriend.username}</h1>
+        <ConversationMainContainer
+          key={onlineFriend.id}
+          onClick={() => findConversation(onlineFriend._id, userId)}
+        >
+          <ConversationImg
+            src={`https://avatars.dicebear.com/api/identicon/${onlineFriend.username}.svg`}
+            alt=""
+          />
+          <span>{onlineFriend.username}</span>
+        </ConversationMainContainer>
       ))}
     </div>
   );

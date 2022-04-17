@@ -218,9 +218,12 @@ export const getMessages = async (id) => {
 
 // find conversation
 export const findConvo = async (userId, friendId) => {
+  console.log(userId);
+  console.log(friendId);
   try {
     const req = await fetch(`/api/msgs/conversation/${userId}/${friendId}`);
     const res = await req.json();
+    console.log(res);
     return res;
   } catch (error) {
     console.log(error);
