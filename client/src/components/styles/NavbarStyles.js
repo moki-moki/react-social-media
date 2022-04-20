@@ -176,3 +176,64 @@ export const AdditionWrapper = styled.div`
     cursor: pointer;
   }
 `;
+
+export const NotificationContainer = styled.span`
+  position: relative;
+
+  & > span {
+    cursor: pointer;
+  }
+`;
+
+export const NotificationNumber = styled.span`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.7em;
+  top: -2px;
+  right: -2px;
+  background: ${({ theme }) => theme.colors.redBtn};
+  color: ${({ theme }) => theme.colors.heading};
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+`;
+
+export const NotificationArrow = styled.div`
+  height: 20px;
+  width: 20px;
+  background: ${({ theme }) => theme.colors.text};
+  position: absolute;
+
+  clip-path: polygon(50% 0, 0 100%, 100% 100%);
+`;
+
+export const NotificationTextContainer = styled.div`
+  position: absolute;
+  border-radius: 10px;
+  top: 33px;
+  width: 227px;
+  background-color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.cardBg};
+`;
+
+export const NotificationMessagesContainer = styled.div`
+  padding: 0.3em;
+  height: auto;
+  max-height: 250px;
+  overflow-y: auto;
+`;
+
+export const NotificationMarkAsRead = styled.span`
+  display: block;
+  cursor: pointer;
+  padding: 0.3em;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 0 0 10px 10px;
+  border-top: 2px solid ${({ theme }) => theme.colors.cardBg};
+  background-color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.cardBg};
+`;

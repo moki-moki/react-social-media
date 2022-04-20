@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router";
 import { AuthContext } from "./context/AuthContext";
@@ -15,6 +15,7 @@ import {
   PostCardBtnContainer,
   PostCardBottomBar,
 } from "./styles/PostCardStyles";
+import { fetchPostData } from "./utils/apiHelpers";
 import Loader from "./Loader";
 import Comments from "./Comments";
 import {
@@ -24,6 +25,7 @@ import {
 } from "./styles/SinglePostStyles";
 import CommentInput from "./CommentInput";
 import LikeDislike from "./LikeDislike";
+import { io, Socket } from "socket.io-client";
 
 const SinglePost = () => {
   const { id } = useParams();
@@ -43,6 +45,8 @@ const SinglePost = () => {
     setShowInput(!showInput);
   };
 
+  const socket = useRef();
+
   // get posts data
   useEffect(() => {
     const getData = async () => {
@@ -53,15 +57,18 @@ const SinglePost = () => {
       setDislike(data.dislikes);
     };
     getData();
+
+    socket.current = io("http://localhost:5000");
   }, []);
 
   // get users data for a post
   useEffect(() => {
-    const fetchPostData = async () => {
-      const req = await fetch(`/api/user?userId=${postData.userId}`);
-      const data = await req.json();
-      setUserPost(data);
-    };
+    // const fetchPostData = async () => {
+    //   const req = await fetch(`/api/user?userId=${postData.userId}`);
+    //   const data = await req.json();
+    fetchPostData(postData.userId).then((data) => setUserPost(data));
+    // setUserPost(data);
+    // };
 
     if (!user) {
       history.push("/login");

@@ -11,7 +11,7 @@ export const getPosts = async () => {
 // Likes post
 export const likeHelper = async (id, myInit) => {
   try {
-    return await fetch("/api/posts/" + id + "/like", myInit);
+    return await fetch(`/api/posts/${id}/like`, myInit);
   } catch (error) {
     console.log(error);
   }
@@ -20,7 +20,7 @@ export const likeHelper = async (id, myInit) => {
 // Dislikes post
 export const dislikeHelper = async (id, myInit) => {
   try {
-    return await fetch("/api/posts/" + id + "/dislike", myInit);
+    return await fetch(`/api/posts/${id}/dislike`, myInit);
   } catch (error) {
     console.log(error);
   }

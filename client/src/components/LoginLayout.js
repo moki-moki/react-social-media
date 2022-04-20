@@ -4,6 +4,7 @@ import { loginCall } from "./auth/apiCalls";
 import { AuthContext } from "./context/AuthContext";
 import NotificationFail from "./NotificationFail";
 import { FormButton, FormControl, Input, SpanForm } from "./styles/FormStyles";
+import { io } from "socket.io-client";
 
 const LoginLayout = () => {
   const password = useRef();
@@ -11,11 +12,18 @@ const LoginLayout = () => {
   const { error, dispatch } = useContext(AuthContext);
   const history = useHistory();
 
+  const socket = useRef();
+
+  socket.current = io("ws://localhost:5000");
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       await loginCall(
-        { email: email.current.value, password: password.current.value },
+        {
+          email: email.current.value,
+          password: password.current.value,
+        },
         dispatch
       );
       history.push("/");

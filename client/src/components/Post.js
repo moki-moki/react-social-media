@@ -37,6 +37,8 @@ const Post = ({ post }) => {
     setOpenModal(!openModal);
   };
 
+  console.log(userPost);
+
   return (
     <PostCardContainer>
       <PostCardContentContainer>
@@ -79,6 +81,7 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
                 likeArr={post.likes}
                 dislikeArr={post.dislikes}
                 postUserId={post.userId}
+                userPost={userPost.username}
               />
               {/* comments */}
               <SinglePostCommentBtn>

@@ -1,18 +1,23 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "./context/AuthContext";
 import {
   PostCardButtonsDislike,
   PostCardButtonsLike,
 } from "./styles/PostCardStyles";
 import { dislikeHelper, likeHelper } from "./utils/apiHelpers";
+import { io } from "socket.io-client";
 
-const LikeDislike = ({ likeArr, dislikeArr, id }) => {
+const LikeDislike = ({ likeArr, dislikeArr, id, userPost }) => {
   const [like, setLike] = useState(likeArr.length);
   const [dislike, setDislike] = useState(dislikeArr.length);
   const [isDislike, setIsDislike] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
 
   const { user } = useContext(AuthContext);
+
+  const socket = useRef();
+
+  socket.current = io("http://localhost:5000");
 
   const myInit = {
     method: "PUT",
@@ -30,7 +35,7 @@ const LikeDislike = ({ likeArr, dislikeArr, id }) => {
   }, [user.user._id, likeArr, dislikeArr]);
 
   // like func
-  const likeHandle = async () => {
+  const likeHandle = (type) => {
     // check if user disliked post
     if (isDislike === true) {
       likeHelper(id, myInit);
@@ -45,6 +50,12 @@ const LikeDislike = ({ likeArr, dislikeArr, id }) => {
       likeHelper(id, myInit);
       setLike(isLiked ? like - 1 : like + 1);
       setIsLiked(!isLiked);
+
+      socket.current.emit("sendNotification", {
+        senderName: user.user.username,
+        receiverName: userPost,
+        type,
+      });
     }
   };
 
@@ -69,7 +80,7 @@ const LikeDislike = ({ likeArr, dislikeArr, id }) => {
 
   return (
     <>
-      <PostCardButtonsLike onClick={likeHandle} isLiked={isLiked}>
+      <PostCardButtonsLike onClick={() => likeHandle(1)} isLiked={isLiked}>
         &#128077; {like > 0 ? like : null}
       </PostCardButtonsLike>
       <PostCardButtonsDislike isDisliked={isDislike} onClick={dislikeHandle}>

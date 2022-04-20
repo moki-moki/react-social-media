@@ -1,6 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import {
-  BtnContainer,
   ChatBoxContainer,
   ChatBoxInput,
   ChatBoxMessageBox,
@@ -24,10 +23,11 @@ import OnlineUsersComp from "./OnlineUsersComp";
 const ChatWindow = () => {
   const { user } = useContext(AuthContext);
 
-  const history = useHistory();
-
   // List of conversations
   const [conversations, setConversations] = useState([]);
+
+  // Online users
+  const [onlineUsers, setOnlineUsers] = useState([]);
 
   // Current onversation chat
   const [currentChat, setCurrentChat] = useState(null);
@@ -43,9 +43,6 @@ const ChatWindow = () => {
 
   // Arrival msg
   const [arrivalMsg, setArrivalMsg] = useState(null);
-
-  // Online users
-  const [onlineUsers, setOnlineUsers] = useState([]);
 
   // OpenClose conversations on mobile
   const [toggleConversation, setToggleConversation] = useState(true);
@@ -71,11 +68,7 @@ const ChatWindow = () => {
 
   // Conversations
   useEffect(() => {
-    if (!user) {
-      history.push("/login");
-    }
-
-    socket.current.emit("addUser", user.user._id);
+    socket.current.emit("addUser", user.user._id, user.user.username);
 
     socket.current.on("getUsers", (users) => {
       setOnlineUsers(

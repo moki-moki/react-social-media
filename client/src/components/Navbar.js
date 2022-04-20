@@ -15,9 +15,18 @@ import {
   ToggleContainer,
   ToggleItemWrapper,
   AdditionWrapper,
+  NotificationContainer,
+  NotificationNumber,
+  NotificationTextContainer,
+  NotificationArrow,
+  NotificationMarkAsRead,
+  NotificationMessagesContainer,
 } from "./styles/NavbarStyles";
+import { io } from "socket.io-client";
 
 const Navbar = ({ user, setThemes, themes }) => {
+  const navRef = useRef(null);
+
   // toggle profile menu
   const [menu, setMenu] = useState(false);
 
@@ -28,6 +37,11 @@ const Navbar = ({ user, setThemes, themes }) => {
   const [toggleHamburger, setToggleHamburger] = useState(false);
   const hamburgerRef = useRef(null);
 
+  // toggle notifications
+  const notifyRef = useRef();
+  const [notifyMenu, setNotifyMenu] = useState(false);
+
+  // Toggle hamburger effect
   useEffect(() => {
     const closeHamburgerMenu = (e) => {
       if (
@@ -46,11 +60,28 @@ const Navbar = ({ user, setThemes, themes }) => {
     };
   }, [hamburgerRef]);
 
+  // Toggle notification effect
+  useEffect(() => {
+    const closeNotification = (e) => {
+      if (notifyRef?.current || notifyRef.current?.contains(e.target)) {
+        setNotifyMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", closeNotification);
+
+    return () => {
+      document.removeEventListener("mousedown", closeNotification);
+    };
+  }, [notifyRef]);
+
+  const toggleNotifyMenu = () => {
+    setNotifyMenu(!notifyMenu);
+  };
+
   const toggleHamburgerMenu = () => {
     setToggleHamburger(!toggleHamburger);
   };
-
-  const navRef = useRef(null);
 
   const changeTheme = () => {
     if (themes === "light") {
@@ -84,6 +115,38 @@ const Navbar = ({ user, setThemes, themes }) => {
   const signOutHandler = () => {
     localStorage.removeItem("user");
     window.location.reload();
+  };
+
+  const [notifications, setNotifications] = useState([]);
+  const socket = useRef();
+
+  socket.current = io("http://localhost:5000");
+
+  useEffect(() => {
+    console.log(user);
+    socket.current.emit("getUser", user);
+
+    socket.current.emit("addUser", user.user._id, user.user.username);
+
+    socket.current.on("getNotification", (data) => {
+      setNotifications((prev) => [...prev, data]);
+    });
+  }, [socket, user]);
+
+  const displayNotification = ({ senderName, type }, idx) => {
+    let action;
+
+    if (type === 1) {
+      action = "liked";
+    } else {
+      action = "disliked";
+    }
+
+    return <span key={idx}>{`${senderName} ${action} your post.`}</span>;
+  };
+
+  const handleMarkAsRead = () => {
+    setNotifications([]);
   };
 
   return (
@@ -135,6 +198,29 @@ const Navbar = ({ user, setThemes, themes }) => {
             </NavLeftSide>
           </NavItemWrapper>
           <AdditionWrapper>
+            <NotificationContainer ref={notifyRef} onClick={toggleNotifyMenu}>
+              <span> &#128276;</span>
+              {notifications.length > 0 && (
+                <NotificationNumber>{notifications.length}</NotificationNumber>
+              )}
+
+              {notifyMenu ? (
+                <>
+                  <NotificationArrow></NotificationArrow>
+                  <NotificationTextContainer>
+                    <NotificationMessagesContainer>
+                      {/* Displays notifications */}
+                      {notifications.map((notify, idx) =>
+                        displayNotification(notify, idx)
+                      )}
+                    </NotificationMessagesContainer>
+                    <NotificationMarkAsRead onClick={handleMarkAsRead}>
+                      Mark as Read
+                    </NotificationMarkAsRead>
+                  </NotificationTextContainer>
+                </>
+              ) : null}
+            </NotificationContainer>
             <Link to="/chat">&#128172;</Link>
             <ToggleContainer>
               <ToggleItemWrapper onClick={changeTheme}>

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { AuthContext } from "./components/context/AuthContext";
 
@@ -27,7 +27,8 @@ import theme from "./components/styles/theme";
 import ChatWindow from "./components/ChatWindow";
 
 function App() {
-  const { user, error } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+
   const [themes, setThemes] = useState(
     JSON.parse(localStorage.getItem("theme")) || "dark"
   );

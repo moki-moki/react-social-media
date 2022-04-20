@@ -2,9 +2,9 @@ const { Server } = require("socket.io");
 
 let users = [];
 
-const addUser = (userId, socketId) => {
+const addUser = (userId, username, socketId) => {
   !users.some((user) => user.userId === userId) &&
-    users.push({ userId, socketId });
+    users.push({ userId, username, socketId });
 };
 
 const removeUser = (socketId) => {
@@ -12,9 +12,11 @@ const removeUser = (socketId) => {
 };
 
 const getSingleUser = (userId) => {
-  console.log(userId);
-  console.log(users);
   return users.find((user) => user.userId === userId);
+};
+
+const getUserByName = (username) => {
+  return users.find((user) => user.username === username);
 };
 
 exports.sio = (server) => {
@@ -31,8 +33,8 @@ exports.connection = (io) => {
     console.log("user connected");
 
     // take user id, socket id and adds it to array of users
-    socket.on("addUser", (userId) => {
-      addUser(userId, socket.id);
+    socket.on("addUser", (userId, username) => {
+      addUser(userId, username, socket.id);
 
       io.emit("getUsers", users);
     });
@@ -41,18 +43,29 @@ exports.connection = (io) => {
     socket.on("sendMessage", ({ senderId, receiverId, text }) => {
       const user = getSingleUser(receiverId);
 
-      console.log(user);
-      console.log(receiverId);
-
       io.to(user?.socketId).emit("getMessage", {
         senderId,
         text,
       });
     });
 
+    // Original: receiverName
+    socket.on("sendNotification", ({ senderName, receiverName, type }) => {
+      const receiver = getUserByName(receiverName);
+
+      console.log(receiver);
+
+      console.log(senderName);
+      console.log(type);
+
+      io.to(receiver?.socketId).emit("getNotification", {
+        senderName,
+        type,
+      });
+    });
+
     // Removes user from array on disconnect
     socket.on("disconnect", () => {
-      console.log("User disconnected");
       removeUser(socket.id);
 
       // Get online users

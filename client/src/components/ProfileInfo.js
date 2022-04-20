@@ -26,8 +26,6 @@ const ProfileInfo = ({ name, id, userId, friends }) => {
 
   const { user } = useContext(AuthContext);
 
-  console.log(user);
-
   // Add friend
   const addFriendHandler = async (id, userId) => {
     await addFriend(id, userId);
@@ -120,10 +118,6 @@ https://avatars.dicebear.com/api/identicon/${name}.svg
           toggleFriends={toggleFriends}
           setToggleFriends={setToggleFriends}
           usersFriends={usersFriends}
-          userId={userId}
-          friends={friends}
-          id={id}
-          addFriendHandler={addFriendHandler}
         />
       ) : null}
     </ProfileCardMainContainer>
