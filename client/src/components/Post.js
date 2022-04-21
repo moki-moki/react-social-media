@@ -21,7 +21,7 @@ import moment from "moment";
 import { fetchPostData } from "./utils/apiHelpers";
 import LikeDislike from "./LikeDislike";
 
-const Post = ({ post }) => {
+const Post = ({ post, socket }) => {
   const [userPost, setUserPost] = useState({});
   const [openModal, setOpenModal] = useState(false);
 
@@ -36,8 +36,6 @@ const Post = ({ post }) => {
   const deletePost = async () => {
     setOpenModal(!openModal);
   };
-
-  console.log(userPost);
 
   return (
     <PostCardContainer>
@@ -77,6 +75,7 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
           <PostCardBottomBar>
             <PostCardBtnContainer>
               <LikeDislike
+                socket={socket}
                 id={post._id}
                 likeArr={post.likes}
                 dislikeArr={post.dislikes}

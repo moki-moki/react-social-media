@@ -1,6 +1,7 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { AuthContext } from "./components/context/AuthContext";
+import { io } from "socket.io-client";
 
 // Style
 import GlobalStyles from "./components/styles/GlobalStyles";
@@ -33,16 +34,31 @@ function App() {
     JSON.parse(localStorage.getItem("theme")) || "dark"
   );
 
+  const socket = useRef();
+
+  socket.current = io("ws://localhost:5000");
+
+  useEffect(() => {
+    socket.current.emit("getUser", user);
+
+    socket.current.emit("addUser", user?.user._id, user?.user.username);
+  }, [user]);
+
   return (
     <Router>
       <ThemeProvider theme={theme[themes]}>
         <GlobalStyles />
 
-        <Navbar themes={themes} setThemes={setThemes} user={user} />
+        <Navbar
+          socket={socket}
+          themes={themes}
+          setThemes={setThemes}
+          user={user}
+        />
 
         <Switch>
           <Route exact path="/">
-            <HomepageLayout />
+            <HomepageLayout socket={socket} />
           </Route>
           <Route path="/login">
             <LoginLayout />
@@ -57,13 +73,13 @@ function App() {
             <CreatePost />
           </Route>
           <Route path="/posts/:id">
-            <SinglePost />
+            <SinglePost socket={socket} />
           </Route>
           <Route path="/profile/:username/:id">
             <Profile />
           </Route>
           <Route path="/chat">
-            {user ? <ChatWindow /> : <Redirect to="/login" />}
+            {user ? <ChatWindow socket={socket} /> : <Redirect to="/login" />}
           </Route>
         </Switch>
         <Footer />

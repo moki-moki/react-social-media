@@ -141,7 +141,6 @@ export const getFriends = async (id) => {
   try {
     const req = await fetch(`/api/user/friends/${id}`);
     const res = await req.json();
-    console.log(res);
     return await res;
   } catch (error) {
     console.log(error);
@@ -218,12 +217,9 @@ export const getMessages = async (id) => {
 
 // find conversation
 export const findConvo = async (userId, friendId) => {
-  console.log(userId);
-  console.log(friendId);
   try {
     const req = await fetch(`/api/msgs/conversation/${userId}/${friendId}`);
     const res = await req.json();
-    console.log(res);
     return res;
   } catch (error) {
     console.log(error);
@@ -233,7 +229,6 @@ export const findConvo = async (userId, friendId) => {
 // Send message
 export const sendMsg = async (data) => {
   try {
-    console.log(data);
     const req = await fetch("/api/msgs/sendMsg", {
       method: "POST",
       headers: {

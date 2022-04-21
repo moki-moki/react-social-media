@@ -22,9 +22,8 @@ import {
   NotificationMarkAsRead,
   NotificationMessagesContainer,
 } from "./styles/NavbarStyles";
-import { io } from "socket.io-client";
 
-const Navbar = ({ user, setThemes, themes }) => {
+const Navbar = ({ user, setThemes, themes, socket }) => {
   const navRef = useRef(null);
 
   // toggle profile menu
@@ -38,8 +37,13 @@ const Navbar = ({ user, setThemes, themes }) => {
   const hamburgerRef = useRef(null);
 
   // toggle notifications
-  const notifyRef = useRef();
+  const notifyRef = useRef(null);
   const [notifyMenu, setNotifyMenu] = useState(false);
+
+  // notification messages
+  const [notifications, setNotifications] = useState(
+    JSON.parse(localStorage.getItem("notification")) || []
+  );
 
   // Toggle hamburger effect
   useEffect(() => {
@@ -63,7 +67,11 @@ const Navbar = ({ user, setThemes, themes }) => {
   // Toggle notification effect
   useEffect(() => {
     const closeNotification = (e) => {
-      if (notifyRef?.current || notifyRef.current?.contains(e.target)) {
+      if (
+        notifyRef.current &&
+        !notifyRef.current.contains(e.target) &&
+        e.target.className !== "sc-khQegj FpLmh"
+      ) {
         setNotifyMenu(false);
       }
     };
@@ -117,17 +125,8 @@ const Navbar = ({ user, setThemes, themes }) => {
     window.location.reload();
   };
 
-  const [notifications, setNotifications] = useState([]);
-  const socket = useRef();
-
-  socket.current = io("http://localhost:5000");
-
+  // Socket effect
   useEffect(() => {
-    console.log(user);
-    socket.current.emit("getUser", user);
-
-    socket.current.emit("addUser", user.user._id, user.user.username);
-
     socket.current.on("getNotification", (data) => {
       setNotifications((prev) => [...prev, data]);
     });
@@ -142,11 +141,12 @@ const Navbar = ({ user, setThemes, themes }) => {
       action = "disliked";
     }
 
-    return <span key={idx}>{`${senderName} ${action} your post.`}</span>;
+    return <div key={idx}>{`${senderName} ${action} your post.`}</div>;
   };
 
   const handleMarkAsRead = () => {
     setNotifications([]);
+    localStorage.removeItem("notification");
   };
 
   return (

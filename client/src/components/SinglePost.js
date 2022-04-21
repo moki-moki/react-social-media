@@ -25,9 +25,8 @@ import {
 } from "./styles/SinglePostStyles";
 import CommentInput from "./CommentInput";
 import LikeDislike from "./LikeDislike";
-import { io, Socket } from "socket.io-client";
 
-const SinglePost = () => {
+const SinglePost = ({ socket }) => {
   const { id } = useParams();
   const { user } = useContext(AuthContext);
   const [postData, setPostData] = useState({});
@@ -45,8 +44,6 @@ const SinglePost = () => {
     setShowInput(!showInput);
   };
 
-  const socket = useRef();
-
   // get posts data
   useEffect(() => {
     const getData = async () => {
@@ -57,8 +54,6 @@ const SinglePost = () => {
       setDislike(data.dislikes);
     };
     getData();
-
-    socket.current = io("http://localhost:5000");
   }, []);
 
   // get users data for a post
@@ -119,7 +114,12 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
             <PostCardBottomBar>
               <PostCardBtnContainer>
                 {/* like dislike component */}
-                <LikeDislike id={id} likeArr={like} dislikeArr={dislike} />
+                <LikeDislike
+                  socket={socket}
+                  id={id}
+                  likeArr={like}
+                  dislikeArr={dislike}
+                />
                 {/* comments */}
                 <SinglePostCommentBtn
                   disabled={showInput === true}

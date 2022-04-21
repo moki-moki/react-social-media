@@ -16,14 +16,11 @@ const OnlineUsersComp = ({ userId, setCurrentChat, onlineUsers }) => {
 
     getUsersFriends(userId);
   }, [userId]);
-  console.log(friends);
 
   // call online users on load
   useEffect(() => {
     setOnlineFriends(friends.filter((f) => onlineUsers.includes(f._id)));
   }, [friends, onlineUsers]);
-
-  console.log(onlineFriends);
 
   //find convo
   const findConversation = async (userId, friendId) => {

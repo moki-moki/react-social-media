@@ -14,13 +14,12 @@ import {
 } from "./styles/ChatwindowStyles/ChatWindowStyles";
 import { getConversation, getMessages, sendMsg } from "./utils/apiHelpers";
 import { AuthContext } from "./context/AuthContext";
-import { useHistory } from "react-router-dom";
 import Conversation from "./Conversation";
 import Message from "./Message";
-import { io } from "socket.io-client";
+
 import OnlineUsersComp from "./OnlineUsersComp";
 
-const ChatWindow = () => {
+const ChatWindow = ({ socket }) => {
   const { user } = useContext(AuthContext);
 
   // List of conversations
@@ -50,13 +49,8 @@ const ChatWindow = () => {
   // OpenClose Online Friends on mobile
   const [toggleOnlineFriends, setToggleOnlineFriends] = useState(true);
 
-  // Sockets
-  const socket = useRef();
-
   // Socket effect so it calls only once
   useEffect(() => {
-    socket.current = io("ws://localhost:5000");
-
     socket.current.on("getMessage", (data) => {
       setArrivalMsg({
         sender: data.senderId,

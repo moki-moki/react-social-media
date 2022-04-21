@@ -1,23 +1,18 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./context/AuthContext";
 import {
   PostCardButtonsDislike,
   PostCardButtonsLike,
 } from "./styles/PostCardStyles";
 import { dislikeHelper, likeHelper } from "./utils/apiHelpers";
-import { io } from "socket.io-client";
 
-const LikeDislike = ({ likeArr, dislikeArr, id, userPost }) => {
+const LikeDislike = ({ likeArr, dislikeArr, id, userPost, socket }) => {
   const [like, setLike] = useState(likeArr.length);
   const [dislike, setDislike] = useState(dislikeArr.length);
   const [isDislike, setIsDislike] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
 
   const { user } = useContext(AuthContext);
-
-  const socket = useRef();
-
-  socket.current = io("http://localhost:5000");
 
   const myInit = {
     method: "PUT",
@@ -46,6 +41,11 @@ const LikeDislike = ({ likeArr, dislikeArr, id, userPost }) => {
       dislikeHelper(id, myInit);
       setDislike(dislike - 1);
       setIsDislike(!isDislike);
+    } else if (isLiked === true) {
+      // If its already liked don't send notification
+      likeHelper(id, myInit);
+      setLike(isLiked ? like - 1 : like + 1);
+      setIsLiked(!isLiked);
     } else {
       likeHelper(id, myInit);
       setLike(isLiked ? like - 1 : like + 1);
@@ -60,7 +60,7 @@ const LikeDislike = ({ likeArr, dislikeArr, id, userPost }) => {
   };
 
   // dislike func
-  const dislikeHandle = async () => {
+  const dislikeHandle = async (type) => {
     // check if user already liked a post
     if (isLiked === true) {
       // sets isLiked to false and removes the like
@@ -71,10 +71,21 @@ const LikeDislike = ({ likeArr, dislikeArr, id, userPost }) => {
       dislikeHelper(id, myInit);
       setDislike(isDislike ? dislike - 1 : dislike + 1);
       setIsDislike(!isDislike);
+    } else if (isDislike === true) {
+      //If it's already disliked don't send notification
+      dislikeHelper(id, myInit);
+      setDislike(isDislike ? dislike - 1 : dislike + 1);
+      setIsDislike(!isDislike);
     } else {
       dislikeHelper(id, myInit);
       setDislike(isDislike ? dislike - 1 : dislike + 1);
       setIsDislike(!isDislike);
+
+      socket.current.emit("sendNotification", {
+        senderName: user.user.username,
+        receiverName: userPost,
+        type,
+      });
     }
   };
 
@@ -83,7 +94,10 @@ const LikeDislike = ({ likeArr, dislikeArr, id, userPost }) => {
       <PostCardButtonsLike onClick={() => likeHandle(1)} isLiked={isLiked}>
         &#128077; {like > 0 ? like : null}
       </PostCardButtonsLike>
-      <PostCardButtonsDislike isDisliked={isDislike} onClick={dislikeHandle}>
+      <PostCardButtonsDislike
+        isDisliked={isDislike}
+        onClick={() => dislikeHandle(2)}
+      >
         &#128169;{dislike > 0 ? dislike : null}
       </PostCardButtonsDislike>
     </>

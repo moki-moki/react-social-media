@@ -30,8 +30,6 @@ exports.sio = (server) => {
 
 exports.connection = (io) => {
   io.on("connection", (socket) => {
-    console.log("user connected");
-
     // take user id, socket id and adds it to array of users
     socket.on("addUser", (userId, username) => {
       addUser(userId, username, socket.id);
@@ -52,11 +50,6 @@ exports.connection = (io) => {
     // Original: receiverName
     socket.on("sendNotification", ({ senderName, receiverName, type }) => {
       const receiver = getUserByName(receiverName);
-
-      console.log(receiver);
-
-      console.log(senderName);
-      console.log(type);
 
       io.to(receiver?.socketId).emit("getNotification", {
         senderName,

@@ -7,7 +7,7 @@ import { getPosts } from "./utils/apiHelpers";
 import { AuthContext } from "./context/AuthContext";
 import { MainHomeContainer } from "./styles/HomepageStyles";
 
-const HomepageLayout = () => {
+const HomepageLayout = ({ socket }) => {
   const [posts, setPosts] = useState();
 
   const { user } = useContext(AuthContext);
@@ -41,7 +41,7 @@ const HomepageLayout = () => {
       ) : (
         <>
           {posts.map((post) => (
-            <Post key={post._id} post={post} />
+            <Post socket={socket} key={post._id} post={post} />
           ))}
         </>
       )}
