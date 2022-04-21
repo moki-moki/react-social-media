@@ -41,9 +41,7 @@ const Navbar = ({ user, setThemes, themes, socket }) => {
   const [notifyMenu, setNotifyMenu] = useState(false);
 
   // notification messages
-  const [notifications, setNotifications] = useState(
-    JSON.parse(localStorage.getItem("notification")) || []
-  );
+  const [notifications, setNotifications] = useState([]);
 
   // Toggle hamburger effect
   useEffect(() => {
@@ -146,7 +144,6 @@ const Navbar = ({ user, setThemes, themes, socket }) => {
 
   const handleMarkAsRead = () => {
     setNotifications([]);
-    localStorage.removeItem("notification");
   };
 
   return (
