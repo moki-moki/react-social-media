@@ -60,7 +60,7 @@ const CreatePost = () => {
     // uploads the post
     try {
       if (desc.current.value !== "") {
-        // createPost(newPost.desc, newPost.img, newPost.userId);
+        createPost(newPost.desc, newPost.img, newPost.userId);
         setShowNotification(true);
         setTimeout(() => {
           setShowNotification(false);
