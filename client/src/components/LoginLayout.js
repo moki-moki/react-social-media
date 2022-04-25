@@ -1,20 +1,21 @@
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { loginCall } from "./auth/apiCalls";
 import { AuthContext } from "./context/AuthContext";
 import NotificationFail from "./NotificationFail";
 import { FormButton, FormControl, Input, SpanForm } from "./styles/FormStyles";
-import { io } from "socket.io-client";
 
 const LoginLayout = () => {
   const password = useRef();
   const email = useRef();
-  const { error, dispatch } = useContext(AuthContext);
+  const { user, error, dispatch } = useContext(AuthContext);
   const history = useHistory();
 
-  const socket = useRef();
-
-  socket.current = io("ws://localhost:5000");
+  useEffect(() => {
+    if (user) {
+      history.push("/");
+    }
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();

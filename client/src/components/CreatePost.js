@@ -19,6 +19,7 @@ const CreatePost = () => {
   const [fileName, setFileName] = useState(null);
   const [showNotification, setShowNotification] = useState(false);
   const [showNotificationError, setShowNotificationError] = useState(false);
+  const [sharePostError, setSharePostError] = useState(false);
   const { user } = useContext(AuthContext);
   const desc = useRef();
 
@@ -54,17 +55,22 @@ const CreatePost = () => {
       }
     }
 
+    console.log(newPost.desc !== "");
+    console.log(newPost.desc);
     // uploads the post
     try {
-      if (desc.current.value !== "" || newPost.img !== null) {
-        createPost(newPost.desc, newPost.img, newPost.userId);
+      if (desc.current.value !== "") {
+        // createPost(newPost.desc, newPost.img, newPost.userId);
         setShowNotification(true);
         setTimeout(() => {
           setShowNotification(false);
           history.push("/");
         }, 3000);
       } else {
-        return;
+        setSharePostError(true);
+        setTimeout(() => {
+          setSharePostError(false);
+        }, 3000);
       }
     } catch (error) {
       setShowNotificationError(true);
@@ -105,7 +111,12 @@ const CreatePost = () => {
         {/* success msg */}
         {showNotification ? <NotificationSuccess /> : null}
         {/* error msg */}
-        {showNotificationError ? <NotificationFail /> : null}
+        {showNotificationError ? (
+          <NotificationFail text={"Oops... Something went wrong."} />
+        ) : null}
+        {sharePostError ? (
+          <NotificationFail text={"You must type in something"} />
+        ) : null}
       </ShareForm>
     </ShareContainer>
   );

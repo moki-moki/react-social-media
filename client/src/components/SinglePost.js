@@ -91,7 +91,7 @@ const SinglePost = ({ socket }) => {
                 {postData["img"] ? (
                   <img
                     style={{ margin: "1em 0", width: "100%" }}
-                    src={"http://localhost:5000/images/" + postData.img}
+                    src={`https://mokimoki-mern-social-media.herokuapp.com/images/${postData.img}`}
                     alt="alt"
                   />
                 ) : null}

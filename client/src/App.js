@@ -26,6 +26,7 @@ import Profile from "./components/Profile";
 // import theme from "./components/styles/theme";
 import theme from "./components/styles/theme";
 import ChatWindow from "./components/ChatWindow";
+import NotFound from "./components/NotFound";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -61,10 +62,10 @@ function App() {
             <HomepageLayout socket={socket} />
           </Route>
           <Route path="/login">
-            <LoginLayout />
+            {!user ? <LoginLayout /> : <Redirect to="/" />}
           </Route>
           <Route path="/register">
-            <RegisterLayout />
+            {!user ? <RegisterLayout /> : <Redirect to="/" />}
           </Route>
           <Route path="/about">
             <About />
@@ -80,6 +81,9 @@ function App() {
           </Route>
           <Route path="/chat">
             {user ? <ChatWindow socket={socket} /> : <Redirect to="/login" />}
+          </Route>
+          <Route path="*">
+            <NotFound />
           </Route>
         </Switch>
         <Footer />

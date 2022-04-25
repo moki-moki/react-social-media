@@ -68,7 +68,7 @@ https://avatars.dicebear.com/api/identicon/${userPost.username}.svg
             </PostCardDesc>
           </div>
           <img
-            src={`http://localhost:5000/images/${post.img}`}
+            src={`https://mokimoki-mern-social-media.herokuapp.com/images/${post.img}`}
             style={{ width: "100%" }}
             alt=""
           />

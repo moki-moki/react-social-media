@@ -14,7 +14,6 @@ const RegisterLayout = () => {
   const username = useRef();
   const password = useRef();
   const email = useRef();
-
   const history = useHistory();
 
   const [err, setErr] = useState(false);
